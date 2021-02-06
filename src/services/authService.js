@@ -1,20 +1,43 @@
 import http from "./httpService";
 import JwtDecode from "jwt-decode";
 
-const apiEndpoint = "/Security/LoginUser";
+const apiEndpoint = "/Security";
 const tokenKey = "token";
 
 //Setting token to Axios in Http Service to ensure no-Bidirectional dependencies
 http.setJwt(getJwt());
 
 export async function login(email, password) {
-  const { data: jwt } = await http.post(apiEndpoint, {
+  const { data: jwt } = await http.post(`${apiEndpoint}/LoginUser`, {
     email: email,
     password: password,
   });
 
   //Set To Local Browser
   localStorage.setItem(tokenKey, jwt["token"]);
+}
+
+export async function register(email, password, firstname, lastname, username,phoneno, roleId) {
+  const { data: jwt } = await http.post(`${apiEndpoint}/RegisterUser`, {
+    email: email,
+    password: password,
+    idRole:roleId,
+    name: username,
+    firstname: firstname,
+    lastname: lastname,
+    phoneNo:phoneno
+  });
+
+  //Set To Local Browser
+  localStorage.setItem(tokenKey, jwt["token"]);
+}
+
+export async function isUserEmailExists(email){
+  return await http.get(`${apiEndpoint}/IsUserExists/${email}`);
+}
+
+export async function isUserNameExists(username){
+  return await http.get(`${apiEndpoint}/IsUserNameExists/${username}`);
 }
 
 export function loginWithJwt(jwt) {
@@ -42,8 +65,11 @@ export function getCurrentUser() {
 
 export default {
   login,
+  register,
   logout,
   loginWithJwt,
+  isUserEmailExists,
+  isUserNameExists,
   getJwt,
   getCurrentUser,
 };
