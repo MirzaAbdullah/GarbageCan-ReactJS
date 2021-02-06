@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import Input from "./Input";
 import InputWithoutLabel from "./InputWithoutLabel";
 import Select from "./Select";
+import SelectWithoutLabel from "./SelectWithoutLabel";
 
 class Form extends Component {
   state = {
@@ -50,7 +51,7 @@ class Form extends Component {
     return errors;
   };
 
-  handleSubmit = (e) => {
+  handleSubmit_LoginForm = (e) => {
     //Prevent from default behaviour of form submission
     e.preventDefault();
 
@@ -59,7 +60,19 @@ class Form extends Component {
 
     if (errors) return;
 
-    this.doSubmit();
+    this.doSubmit_LoginForm();
+  };
+
+  handleSubmit_RegisterForm = (e) => {
+    //Prevent from default behaviour of form submission
+    e.preventDefault();
+
+    const errors = this.validate();
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
+
+    this.doSubmit_RegisterForm();
   };
 
   renderButton(label) {
@@ -112,7 +125,14 @@ class Form extends Component {
     );
   }
 
-  renderSelect(name, label, options) {
+  renderSelect(
+    name,
+    label,
+    options,
+    dataTextfield,
+    dataValuefield,
+    optionsLabel
+  ) {
     //object destructuring
     const { data, errors } = this.state;
 
@@ -122,6 +142,33 @@ class Form extends Component {
         value={data[name]}
         label={label}
         options={options}
+        dataTextfield={dataTextfield}
+        dataValuefield={dataValuefield}
+        optionsLabel={optionsLabel}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
+    );
+  }
+
+  renderSelectWithoutLabel(
+    name,
+    label,
+    options,
+    dataTextfield,
+    dataValuefield
+  ) {
+    //object destructuring
+    const { data, errors } = this.state;
+
+    return (
+      <SelectWithoutLabel
+        name={name}
+        value={data[name]}
+        label={label}
+        options={options}
+        dataTextfield={dataTextfield}
+        dataValuefield={dataValuefield}
         onChange={this.handleChange}
         error={errors[name]}
       />

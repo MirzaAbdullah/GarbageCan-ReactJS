@@ -3,9 +3,10 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import NavBar from "./components/NavBar";
 import NotFound from "./components/NotFound";
-import LoginForm from "./components/LoginForm";
+import AuthenticationForm from "./components/AuthenticationForm";
 import Logout from "./components/Logout";
 import Approve from "./components/Approve";
+import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import authService from "./services/authService";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,10 +30,11 @@ class App extends Component {
         <main className="container">
           <Switch>
             <Route path="/logout" component={Logout} />
-            <Route path="/login" component={LoginForm} />
+            <Route path="/authentication" component={AuthenticationForm} />
+            <Route path="/dashboard" component={Dashboard} />
             <ProtectedRoute path="/Approve" component={Approve} />
             <Route path="/not-found" component={NotFound}></Route>
-            <Redirect exact from="/" to="login" />
+            <Redirect exact from="/" to="authentication" />
             <Redirect to="/not-found" />
           </Switch>
         </main>
