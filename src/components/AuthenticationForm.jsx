@@ -10,6 +10,7 @@ class AuthenticationForm extends Form {
   state = {
     data: { email: "", password: "" },
     errors: {},
+    isSpinner: false,
   };
 
   schema = {
@@ -17,10 +18,20 @@ class AuthenticationForm extends Form {
     password: Joi.string().required().label("Password"),
   };
 
+  isSpinnerActive = (isSpinner) => {
+    this.setState({ isSpinner: isSpinner });
+  };
+
   doSubmit_LoginForm = async () => {
     try {
+      //Activate the button Spinner
+      this.isSpinnerActive(true);
+
       const { data } = this.state;
       await authService.login(data.email, data.password);
+
+      //Activate the button Spinner
+      this.isSpinnerActive(false);
 
       //redirects to homePage or already selected page
       const { state } = this.props.location;
@@ -36,6 +47,8 @@ class AuthenticationForm extends Form {
   };
 
   render() {
+    const { isSpinner } = this.state;
+
     if (authService.getCurrentUser()) return <Redirect to="/dashboard" />;
 
     return (
@@ -74,7 +87,8 @@ class AuthenticationForm extends Form {
                   </div>
                   {this.renderCustomButton(
                     "Sign In",
-                    "btn btn-lg btn-primary btn-block mt-3"
+                    "btn btn-lg btn-primary btn-block mt-3",
+                    isSpinner
                   )}
                 </form>
               </div>
