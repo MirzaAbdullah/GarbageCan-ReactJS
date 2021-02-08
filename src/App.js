@@ -5,9 +5,7 @@ import NavBar from "./components/NavBar";
 import NotFound from "./components/NotFound";
 import AuthenticationForm from "./components/AuthenticationForm";
 import Logout from "./components/Logout";
-import Approve from "./components/Approve";
 import Dashboard from "./components/Dashboard";
-import ProtectedRoute from "./components/common/ProtectedRoute";
 import authService from "./services/authService";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -32,7 +30,7 @@ class App extends Component {
             <Route path="/logout" component={Logout} />
             <Route path="/authentication" component={AuthenticationForm} />
             <Route path="/dashboard" component={Dashboard} />
-            <ProtectedRoute path="/Approve" component={Approve} />
+            {/* <ProtectedRoute path="/Approve" component={Approve} /> */}
             <Route path="/not-found" component={NotFound}></Route>
             <Redirect exact from="/" to="authentication" />
             <Redirect to="/not-found" />
