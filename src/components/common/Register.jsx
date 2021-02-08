@@ -18,6 +18,7 @@ class Register extends Form {
     errors: {},
     roles: [],
     currentUser: authService.getCurrentUser(),
+    isSpinner: false,
   };
 
   schema = {
@@ -30,9 +31,11 @@ class Register extends Form {
   };
 
   async componentDidMount() {
+    const { currentUser, data } = this.state;
+
     //If User is LoggedIn add roleId key in this.state.data to enable joi validation on roles dropdown
-    if (this.state.currentUser) {
-      const cloneData = { ...this.state.data };
+    if (currentUser) {
+      const cloneData = { ...data };
       cloneData["roleId"] = "";
       this.setState({ data: cloneData });
     }
@@ -55,8 +58,15 @@ class Register extends Form {
     return await authService.isUserEmailExists(email);
   }
 
+  isSpinnerActive = (isSpinner) => {
+    this.setState({ isSpinner: isSpinner });
+  };
+
   doSubmit_RegisterForm = async () => {
     try {
+      //Activate the button Spinner
+      this.isSpinnerActive(true);
+
       const { data: userModel, currentUser } = this.state;
 
       //Check if UserName Already Exists
@@ -69,18 +79,16 @@ class Register extends Form {
         userModel.emailRegister
       );
 
+      //Setting Error state for Register Component when username & email already exists
       if (isUserNameExists || isEmailExists) {
         let errorArr = {};
 
         if (isUserNameExists) {
-          errorArr = { name: "Username already exists! Try another." };
+          errorArr.name = "Username already exists! Try another.";
         }
 
         if (isEmailExists) {
-          errorArr = {
-            ...errorArr,
-            emailRegister: "Email Address already exists! Try another.",
-          };
+          errorArr.emailRegister = "Email Address already exists! Try another.";
         }
 
         this.setState({
@@ -88,18 +96,25 @@ class Register extends Form {
         });
       }
 
-      await authService.register(
-        userModel.emailRegister,
-        userModel.passwordRegister,
-        userModel.firstName,
-        userModel.lastName,
-        userModel.name,
-        userModel.phoneNo,
-        currentUser ? userModel.roleId : 3
-      );
-      //redirects to homePage or already selected page
-      const { state } = this.props.location;
-      window.location = state ? state.from.pathname : "/dashboard";
+      if (Object.entries(this.state.errors).length === 0) {
+        await authService.register(
+          userModel.emailRegister,
+          userModel.passwordRegister,
+          userModel.firstName,
+          userModel.lastName,
+          userModel.name,
+          userModel.phoneNo,
+          currentUser ? userModel.roleId : 3
+        );
+
+        //redirects to homePage or already selected page
+        window.location = this.props.location
+          ? this.props.location.from.pathname
+          : "/dashboard";
+      }
+
+      //Activate the button Spinner
+      this.isSpinnerActive(false);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -110,7 +125,7 @@ class Register extends Form {
   };
 
   render() {
-    const { currentUser } = this.state;
+    const { currentUser, isSpinner } = this.state;
     if (currentUser) return <Redirect to="/dashboard" />;
 
     return (
@@ -164,7 +179,8 @@ class Register extends Form {
           )}
         {this.renderCustomButton(
           "Sign Up",
-          "btn btn-lg btn-primary btn-block mt-3"
+          "btn btn-lg btn-primary btn-block mt-3",
+          isSpinner
         )}
       </form>
     );

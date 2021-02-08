@@ -12,7 +12,7 @@ const NavBar = ({ user }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
       <Link className="navbar-brand" to="/">
-        <i className="fas fa-recycle"></i>&nbsp;&nbsp;GarbageCan
+        <i className="fas fa-recycle"></i>&nbsp; GarbageCan
       </Link>
       <button
         className="navbar-toggler"
@@ -26,24 +26,26 @@ const NavBar = ({ user }) => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav mr-auto">
+        <ul className="navbar-nav ml-auto">
           {user && (
             <React.Fragment>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/approve">
-                  <i className="fas fa-check-circle"></i>&nbsp; Approve Mosques
-                </NavLink>
-              </li>
-            </React.Fragment>
-          )}
-        </ul>
-        <ul className="navbar-nav">
-          {user && (
-            <React.Fragment>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/profile">
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="."
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
                   {user.email}
-                </NavLink>
+                </a>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a className="dropdown-item" href=".">
+                    <i className="fas fa-user-cog"></i>&nbsp; Change Password
+                  </a>
+                </div>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/logout">

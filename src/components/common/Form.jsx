@@ -4,6 +4,7 @@ import Input from "./Input";
 import InputWithoutLabel from "./InputWithoutLabel";
 import Select from "./Select";
 import SelectWithoutLabel from "./SelectWithoutLabel";
+import { Fragment } from "react";
 
 class Form extends Component {
   state = {
@@ -83,11 +84,21 @@ class Form extends Component {
     );
   }
 
-  renderCustomButton(label, customClass) {
+  renderCustomButton(label, customClass, loadingSpinner) {
     return (
-      <button disabled={this.validate()} className={customClass}>
-        {label}
-      </button>
+      <Fragment>
+        <button disabled={this.validate()} className={customClass}>
+          {loadingSpinner && (
+            <span
+              className="spinner-border"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          )}
+          &nbsp;&nbsp;
+          {label}
+        </button>
+      </Fragment>
     );
   }
 
