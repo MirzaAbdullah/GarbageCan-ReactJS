@@ -32,6 +32,17 @@ export async function register(email, password, firstname, lastname, username,ph
   localStorage.setItem(tokenKey, jwt["token"]);
 }
 
+export async function changePassword(userId, newPassword) {
+  return await http.put(`${apiEndpoint}/ChangePassword`, {
+    idUser: userId,
+    password: newPassword
+  });
+}
+
+export async function isPasswordValid(userId, oldPassword){
+  return await http.get(`${apiEndpoint}/IsPasswordValid/${userId}/${oldPassword}`);
+}
+
 export async function isUserEmailExists(email){
   return await http.get(`${apiEndpoint}/IsUserExists/${email}`);
 }
@@ -72,4 +83,6 @@ export default {
   isUserNameExists,
   getJwt,
   getCurrentUser,
+  isPasswordValid,
+  changePassword
 };

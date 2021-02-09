@@ -29,23 +29,17 @@ const NavBar = ({ user }) => {
         <ul className="navbar-nav ml-auto">
           {user && (
             <React.Fragment>
-              <li className="nav-item dropdown">
+              <li className="nav-item">
                 <a
-                  className="nav-link dropdown-toggle"
+                  className="nav-link"
                   href="."
                   id="navbarDropdown"
                   role="button"
                   data-toggle="dropdown"
                   aria-haspopup="true"
-                  aria-expanded="false"
                 >
                   {user.email}
                 </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item" href=".">
-                    <i className="fas fa-user-cog"></i>&nbsp; Change Password
-                  </a>
-                </div>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/logout">

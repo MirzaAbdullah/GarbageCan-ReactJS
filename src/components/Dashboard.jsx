@@ -37,7 +37,6 @@ class Dashboard extends Component {
             <SidebarMenu
               userRole={currentUser.uRoleId}
               onItemSelect={this.handleSelectedSideMenu}
-              itemActive={this.selectedMenuItem}
             />
           </div>
           <div className="col-12 col-sm-12 col-md-9">
