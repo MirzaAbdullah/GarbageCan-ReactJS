@@ -76,6 +76,18 @@ class Form extends Component {
     this.doSubmit_RegisterForm();
   };
 
+  handleSubmit_ChangePasswordForm = (e) => {
+    //Prevent from default behaviour of form submission
+    e.preventDefault();
+
+    const errors = this.validate();
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
+
+    this.doSubmit_ChangePasswordForm();
+  };
+
   renderButton(label) {
     return (
       <button disabled={this.validate()} className="btn btn-primary">

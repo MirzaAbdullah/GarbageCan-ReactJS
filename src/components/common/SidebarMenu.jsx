@@ -1,7 +1,7 @@
 import React from "react";
 import { Fragment } from "react";
 
-const SidebarMenu = ({ userRole, onItemSelect, itemActive }) => {
+const SidebarMenu = ({ userRole, onItemSelect }) => {
   return (
     <Fragment>
       <div className="list-group">
@@ -54,6 +54,14 @@ const SidebarMenu = ({ userRole, onItemSelect, itemActive }) => {
             Deliver Pickups
           </button>
         )}
+        <button
+          type="button"
+          className="list-group-item list-group-item-action"
+          onClick={() => onItemSelect("ChangePassword")}
+          id="ChangePassword"
+        >
+          Change Password
+        </button>
       </div>
     </Fragment>
   );
