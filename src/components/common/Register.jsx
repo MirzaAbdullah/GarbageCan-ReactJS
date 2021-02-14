@@ -104,7 +104,8 @@ class Register extends Form {
           userModel.lastName,
           userModel.name,
           userModel.phoneNo,
-          currentUser ? userModel.roleId : 3
+          currentUser ? userModel.roleId : 3,
+          true
         );
 
         //redirects to homePage or already selected page
