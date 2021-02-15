@@ -32,6 +32,13 @@
   display: inline-block;
 }
 
+.anchorDisabled {
+  pointer-events: none !important;
+  cursor: default !important;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .Loginform_Background {
   background-color: #f5f5f5;
 }
@@ -42,6 +49,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.componentBackground {
+  background-color: white;
 }
 
 @keyframes App-logo-spin {

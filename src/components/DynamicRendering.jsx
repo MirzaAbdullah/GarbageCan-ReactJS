@@ -4,6 +4,7 @@ import AssignPickups from "./AssignPickups";
 import DeliverPickups from "./DeliverPickups";
 import ManageAddress from "./ManageAddress";
 import ManagePickups from "./ManagePickups";
+import ChangePassword from "./ChangePassword";
 
 class DynamicRendering extends Component {
   components = {
@@ -12,9 +13,11 @@ class DynamicRendering extends Component {
     DeliverPickups: DeliverPickups,
     ManageAddress: ManageAddress,
     ManagePickups: ManagePickups,
+    ChangePassword: ChangePassword,
   };
   render() {
-    const TagName = this.components[this.props.tag || "User"];
+    const { tag } = this.props;
+    const TagName = this.components[tag];
     return <TagName />;
   }
 }

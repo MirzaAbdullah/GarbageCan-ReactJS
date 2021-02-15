@@ -11,6 +11,7 @@ class AuthenticationForm extends Form {
     data: { email: "", password: "" },
     errors: {},
     isSpinner: false,
+    currentUser: authService.getCurrentUser(),
   };
 
   schema = {
@@ -28,6 +29,7 @@ class AuthenticationForm extends Form {
       this.isSpinnerActive(true);
 
       const { data } = this.state;
+
       await authService.login(data.email, data.password);
 
       //Activate the button Spinner
@@ -47,9 +49,9 @@ class AuthenticationForm extends Form {
   };
 
   render() {
-    const { isSpinner } = this.state;
+    const { isSpinner, currentUser } = this.state;
 
-    if (authService.getCurrentUser()) return <Redirect to="/dashboard" />;
+    if (currentUser) return <Redirect to="/dashboard" />;
 
     return (
       <Fragment>

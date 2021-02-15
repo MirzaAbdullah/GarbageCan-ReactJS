@@ -17,7 +17,7 @@ export async function login(email, password) {
   localStorage.setItem(tokenKey, jwt["token"]);
 }
 
-export async function register(email, password, firstname, lastname, username,phoneno, roleId) {
+export async function register(email, password, firstname, lastname, username,phoneno, roleId, setToken) {
   const { data: jwt } = await http.post(`${apiEndpoint}/RegisterUser`, {
     email: email,
     password: password,
@@ -28,8 +28,23 @@ export async function register(email, password, firstname, lastname, username,ph
     phoneNo:phoneno
   });
 
-  //Set To Local Browser
+  if(setToken){
+    //Set To Local Browser
   localStorage.setItem(tokenKey, jwt["token"]);
+  } else {
+    return jwt;
+  }
+}
+
+export async function changePassword(userId, newPassword) {
+  return await http.put(`${apiEndpoint}/ChangePassword`, {
+    idUser: userId,
+    password: newPassword
+  });
+}
+
+export async function isPasswordValid(userId, oldPassword){
+  return await http.get(`${apiEndpoint}/IsPasswordValid/${userId}/${oldPassword}`);
 }
 
 export async function isUserEmailExists(email){
@@ -72,4 +87,6 @@ export default {
   isUserNameExists,
   getJwt,
   getCurrentUser,
+  isPasswordValid,
+  changePassword
 };

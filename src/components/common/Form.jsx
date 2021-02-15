@@ -76,6 +76,18 @@ class Form extends Component {
     this.doSubmit_RegisterForm();
   };
 
+  handleSubmit_ChangePasswordForm = (e) => {
+    //Prevent from default behaviour of form submission
+    e.preventDefault();
+
+    const errors = this.validate();
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
+
+    this.doSubmit_ChangePasswordForm();
+  };
+
   renderButton(label) {
     return (
       <button disabled={this.validate()} className="btn btn-primary">
@@ -115,6 +127,24 @@ class Form extends Component {
         onChange={this.handleChange}
         error={errors[name]}
         placeholder={placeholder}
+      />
+    );
+  }
+
+  renderInputDisable(name, label, type, placeholder, isDisabled) {
+    //object destructuring
+    const { data, errors } = this.state;
+
+    return (
+      <Input
+        name={name}
+        value={data[name]}
+        type={type}
+        label={label}
+        onChange={this.handleChange}
+        error={errors[name]}
+        placeholder={placeholder}
+        disabled={isDisabled}
       />
     );
   }
