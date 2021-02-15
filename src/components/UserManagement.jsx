@@ -3,10 +3,9 @@ import Joi from "joi-browser";
 import Form from "./common/Form";
 import $ from "jquery";
 import { toast } from "react-toastify";
-import { makeStyles } from "@material-ui/core/styles";
-import authService from "../services/authService";
-import utilityService from "../services/utilityService";
+import ModalConfirmation from "./common/ModalConfirmation";
 
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
   TableBody,
@@ -18,7 +17,8 @@ import {
 } from "@material-ui/core";
 
 import { getAllUsers, deactivateUserAccount } from "../services/userService";
-import ModalConfirmation from "./common/ModalConfirmation";
+import authService from "../services/authService";
+import utilityService from "../services/utilityService";
 
 class UserManagement extends Form {
   state = {
@@ -255,17 +255,23 @@ class UserManagement extends Form {
       };
 
     if (allUsers.length === 0) {
-      return <p className="mt-2">There are no registered users</p>;
+      return (
+        <div className="text-center mt-5">
+          <span style={{ opacity: 0.7 }}>There are no registered users</span>
+        </div>
+      );
     }
 
     return (
       <div className="row mt-2">
         {isGridView && (
           <React.Fragment>
-            <div className="col-6">
-              <h4>User Management</h4>
+            <div className="col-12 col-sm-12 col-md-6">
+              <h4>
+                <i className="fas fa-users"></i> User Management
+              </h4>
             </div>
-            <div className="col-6 text-right">
+            <div className="col-12 col-sm-12 col-md-6 text-right">
               <button
                 type="button"
                 className="btn btn-primary"
@@ -354,10 +360,12 @@ class UserManagement extends Form {
         )}
         {isEditView && (
           <React.Fragment>
-            <div className="col-6">
-              <h4>Add User</h4>
+            <div className="col-12 col-sm-12 col-md-6">
+              <h4>
+                <i className="fas fa-plus"></i> Add User
+              </h4>
             </div>
-            <div className="col-6 text-right">
+            <div className="col-12 col-sm-12 col-md-6 text-right">
               <button
                 type="button"
                 className="btn btn-primary"

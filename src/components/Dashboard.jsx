@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import authService from "../services/authService";
 import SidebarMenu from "./common/SidebarMenu";
 import DynamicRendering from "./DynamicRendering";
+import { Redirect } from "react-router-dom";
 
 class Dashboard extends Component {
   state = {
@@ -20,6 +21,7 @@ class Dashboard extends Component {
 
   render() {
     const { currentUser, selectedMenuItem } = this.state;
+    if (!currentUser) return <Redirect to="/" />;
 
     return (
       <Fragment>
