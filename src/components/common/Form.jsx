@@ -131,6 +131,24 @@ class Form extends Component {
     );
   }
 
+  renderInputDisable(name, label, type, placeholder, isDisabled) {
+    //object destructuring
+    const { data, errors } = this.state;
+
+    return (
+      <Input
+        name={name}
+        value={data[name]}
+        type={type}
+        label={label}
+        onChange={this.handleChange}
+        error={errors[name]}
+        placeholder={placeholder}
+        disabled={isDisabled}
+      />
+    );
+  }
+
   renderInputWithoutLabel(name, label, type, placeholder) {
     //object destructuring
     const { data, errors } = this.state;
