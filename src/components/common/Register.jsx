@@ -2,7 +2,6 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./Form";
 import authService from "../../services/authService";
-import utilityService from "../../services/utilityService";
 import { Redirect } from "react-router-dom";
 
 class Register extends Form {
@@ -29,26 +28,6 @@ class Register extends Form {
     emailRegister: Joi.string().required().label("Email"),
     passwordRegister: Joi.string().required().label("Password"),
   };
-
-  async componentDidMount() {
-    const { currentUser, data } = this.state;
-
-    //If User is LoggedIn add roleId key in this.state.data to enable joi validation on roles dropdown
-    if (currentUser) {
-      const cloneData = { ...data };
-      cloneData["roleId"] = "";
-      this.setState({ data: cloneData });
-    }
-
-    //Getting Roles from Api Service
-    await this.getAllRoles();
-  }
-
-  async getAllRoles() {
-    //get all roles
-    const { data: roles } = await utilityService.getAllRoles();
-    this.setState({ roles });
-  }
 
   async isUserNameExists(username) {
     return await authService.isUserNameExists(username);
@@ -104,7 +83,8 @@ class Register extends Form {
           userModel.lastName,
           userModel.name,
           userModel.phoneNo,
-          currentUser ? userModel.roleId : 3
+          currentUser ? userModel.roleId : 3,
+          true
         );
 
         //redirects to homePage or already selected page
@@ -169,14 +149,6 @@ class Register extends Form {
           "password",
           "Enter Password"
         )}
-        {currentUser &&
-          this.renderSelectWithoutLabel(
-            "roleId",
-            "Roles",
-            this.state.roles,
-            "roleName",
-            "roleId"
-          )}
         {this.renderCustomButton(
           "Sign Up",
           "btn btn-lg btn-primary btn-block mt-3",

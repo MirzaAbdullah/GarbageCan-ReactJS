@@ -17,7 +17,7 @@ export async function login(email, password) {
   localStorage.setItem(tokenKey, jwt["token"]);
 }
 
-export async function register(email, password, firstname, lastname, username,phoneno, roleId) {
+export async function register(email, password, firstname, lastname, username,phoneno, roleId, setToken) {
   const { data: jwt } = await http.post(`${apiEndpoint}/RegisterUser`, {
     email: email,
     password: password,
@@ -28,8 +28,12 @@ export async function register(email, password, firstname, lastname, username,ph
     phoneNo:phoneno
   });
 
-  //Set To Local Browser
+  if(setToken){
+    //Set To Local Browser
   localStorage.setItem(tokenKey, jwt["token"]);
+  } else {
+    return jwt;
+  }
 }
 
 export async function changePassword(userId, newPassword) {
