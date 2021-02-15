@@ -1,5 +1,7 @@
 //import { Map, GoogleApiWrapper } from 'google-maps-react';
 
+import { defaults } from "lodash";
+
 //haversine function to calculate the straight line distance
 /* function haversine_distance(markerGarbageCan, markerTask0) {
     var R = 6371.0710; // Radius of the Earth in km
@@ -13,7 +15,7 @@
 } */
 
 // Initialize and add the map
-function initMap() {
+export function initMap() {
     // The location of Karachi 0 milestion - I haven't found the location of garbagecan
     const garbCan = { lat: 24.860966, lng: 66.990501 };
     // Creating a new map with 15 zoom and centered on Karachis 0 milestone
@@ -42,8 +44,8 @@ function initMap() {
     var line = new google.maps.Polyline({ path: [garbCan, task1, task0], map: map });
 
     // Calculate and display the distance between markers
-    var distance = haversine_distance(markerGarbageCan, markerTask0);
-    document.getElementById("msg").innerHTML = "Distance between markers: " + distance.toFixed(2) + " km.";
+    // var distance = haversine_distance(markerGarbageCan, markerTask0);
+    // document.getElementById("msg").innerHTML = "Distance between markers: " + distance.toFixed(2) + " km.";
 
     let directionsService = new google.maps.DirectionsService();
     let directionsRenderer = new google.maps.DirectionsRenderer();
@@ -73,3 +75,5 @@ function initMap() {
             }
         });
 }
+
+export default{initMap}
