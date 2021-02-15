@@ -201,6 +201,7 @@ class ManagePickups extends Form {
           </React.Fragment>
         )}
       </React.Fragment>
+
     );
   }
 }
