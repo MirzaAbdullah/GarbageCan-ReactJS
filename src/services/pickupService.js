@@ -11,13 +11,14 @@ export async function deletePickupRequest(pcikupId){
 }
 
 export async function createPickupRequest(userId, pickupDate, pickupTime, latitude, longitude, requestDetails ){
-    return await http.put(`${apiEndpoint}/CreatePickupRequest`, {
+    return await http.post(`${apiEndpoint}/CreatePickupRequest`, {
         idUser: userId,
         pickupDate: pickupDate,
         pickupTime: pickupTime,
         pickupCost: 0,
         latitude: latitude,
         longitude: longitude,
+        createdDate: new Date(),
         requestDetails: requestDetails
       });
 }

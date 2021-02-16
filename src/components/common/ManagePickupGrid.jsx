@@ -96,7 +96,7 @@ class ManagePickupGrid extends Component {
       toast.success("Pickup request delete successfully");
     } else {
       toast.error(
-        "Deleting pickup request failed Or you can only delete pickup until 30 mins of request! Please try again. "
+        "Deleting pickup request failed Or it's only possible to delete if pickup status is In Process! Please try again. "
       );
     }
   };
