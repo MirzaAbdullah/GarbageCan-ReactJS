@@ -11,6 +11,8 @@ class AuthenticationForm extends Form {
     data: { email: "", password: "" },
     errors: {},
     isSpinner: false,
+    isRegisterView: false,
+    isLoginView: false,
     currentUser: authService.getCurrentUser(),
   };
 
@@ -19,8 +21,23 @@ class AuthenticationForm extends Form {
     password: Joi.string().required().label("Password"),
   };
 
+  componentDidMount() {
+    //Set isLoginView = true & isRegisterView = false
+    this.setState({ isLoginView: true, isRegisterView: false });
+  }
+
   isSpinnerActive = (isSpinner) => {
     this.setState({ isSpinner: isSpinner });
+  };
+
+  handleModes = (mode) => {
+    if (mode === "login") {
+      //Set isGridView = true & isEditView = false
+      this.setState({ isLoginView: true, isRegisterView: false });
+    } else if (mode === "register") {
+      //Set isGridView = true & isEditView = false
+      this.setState({ isLoginView: false, isRegisterView: true });
+    }
   };
 
   doSubmit_LoginForm = async () => {
@@ -49,7 +66,7 @@ class AuthenticationForm extends Form {
   };
 
   render() {
-    const { isSpinner, currentUser } = this.state;
+    const { isSpinner, currentUser, isLoginView, isRegisterView } = this.state;
 
     if (currentUser) return <Redirect to="/dashboard" />;
 
@@ -57,7 +74,7 @@ class AuthenticationForm extends Form {
       <Fragment>
         <div className="text-center Loginform_MT">
           <img
-            className="mb-4"
+            className="mb-2"
             src="/GarbageCan_Logo.png"
             alt="GarbageCan Offical Logo"
             width="250"
@@ -66,40 +83,57 @@ class AuthenticationForm extends Form {
         </div>
         <div className="container mt-4">
           <div className="row">
-            <div className="col-12 col-md-6 border-right">
-              <div className="col-8 offset-2">
-                <form onSubmit={this.handleSubmit_LoginForm}>
-                  <div className="text-center">
-                    <h1 className="h3 mb-3 font-weight-normal">Sign In</h1>
-                  </div>
-                  {this.renderInputWithoutLabel(
-                    "email",
-                    "Email",
-                    "email",
-                    "Enter Email"
-                  )}
-                  {this.renderInputWithoutLabel(
-                    "password",
-                    "Password",
-                    "password",
-                    "Enter Password"
-                  )}
-                  <div className="text-right">
-                    <a href=".">Forget Password?</a>
-                  </div>
-                  {this.renderCustomButton(
-                    "Sign In",
-                    "btn btn-lg btn-primary btn-block mt-3",
-                    isSpinner
-                  )}
-                </form>
+            {isLoginView && (
+              <div className="col-12 col-md-12">
+                <div className="col-12 col-sm-12 col-md-4 offset-md-4">
+                  <form onSubmit={this.handleSubmit_LoginForm}>
+                    <div className="text-center mb-3">
+                      <h6 className="h5">Welcome to GarbageCAN (Pvt.) Ltd</h6>
+                      <span>
+                        Please sign in below or{" "}
+                        <a
+                          href="javascript:void(0)"
+                          onClick={() => this.handleModes("register")}
+                        >
+                          create an account
+                        </a>
+                      </span>
+                    </div>
+                    <div className="mb-2">
+                      {this.renderInputWithoutLabel(
+                        "email",
+                        "Email",
+                        "email",
+                        "Enter Email"
+                      )}
+                    </div>
+                    <div className="mb-2">
+                      {this.renderInputWithoutLabel(
+                        "password",
+                        "Password",
+                        "password",
+                        "Enter Password"
+                      )}
+                    </div>
+                    <div className="text-right">
+                      <a href=".">Forget Password?</a>
+                    </div>
+                    {this.renderCustomButton(
+                      "Sign In",
+                      "btn btn-lg btn-primary btn-block mt-3",
+                      isSpinner
+                    )}
+                  </form>
+                </div>
               </div>
-            </div>
-            <div className="col-12 col-md-6">
-              <div className="col-8 offset-2">
-                <Register />
+            )}
+            {isRegisterView && (
+              <div className="col-12 col-md-12">
+                <div className="col-8 offset-2">
+                  <Register handleModes={this.handleModes} />
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </Fragment>

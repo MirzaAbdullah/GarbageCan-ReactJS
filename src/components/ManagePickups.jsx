@@ -21,6 +21,7 @@ class ManagePickups extends Form {
       pickupTime: "",
       latitude: "",
       longitude: "",
+      myItems: [],
     },
     errors: {},
     allPickups: [],
