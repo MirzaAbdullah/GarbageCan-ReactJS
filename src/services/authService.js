@@ -47,6 +47,21 @@ export async function isPasswordValid(userId, oldPassword){
   return await http.get(`${apiEndpoint}/IsPasswordValid/${userId}/${oldPassword}`);
 }
 
+export async function sendVerificationCode(userEmail){
+  return await http.get(`${apiEndpoint}/SendVerificationCode/${userEmail}`);
+}
+
+export async function verifyUser(userEmail, verificationCode) {
+  return await http.put(`${apiEndpoint}/VerifyUser`, {
+    email: userEmail,
+    verificationCode: verificationCode
+  });
+}
+
+export async function getUserById(userId){
+  return await http.get(`${apiEndpoint}/GetUserById/${userId}`);
+}
+
 export async function isUserEmailExists(email){
   return await http.get(`${apiEndpoint}/IsUserExists/${email}`);
 }
@@ -88,5 +103,8 @@ export default {
   getJwt,
   getCurrentUser,
   isPasswordValid,
-  changePassword
+  changePassword,
+  sendVerificationCode,
+  verifyUser,
+  getUserById
 };
