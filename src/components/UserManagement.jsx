@@ -130,7 +130,7 @@ class UserManagement extends Form {
       const { allUsers } = this.state;
 
       //Change Bit from true to false
-      const userIndex = allUsers.findIndex((user) => user.idUser);
+      const userIndex = allUsers.findIndex((user) => user.idUser === userId);
       let cloneAllUsers = [...allUsers];
 
       cloneAllUsers[userIndex] = {

@@ -1,7 +1,6 @@
 import React from "react";
 import Form from "./common/Form";
 import Joi from "joi-browser";
-import $ from "jquery";
 import { toast } from "react-toastify";
 
 import {
@@ -12,7 +11,6 @@ import authService from "../services/authService";
 import { GetAllItems } from "../services/utilityService";
 
 import ManagePickupGrid from "./common/ManagePickupGrid";
-import CheckBoxList from "./common/CheckboxList";
 
 class ManagePickups extends Form {
   state = {
@@ -21,7 +19,6 @@ class ManagePickups extends Form {
       pickupTime: "",
       latitude: "",
       longitude: "",
-      myItems: [],
     },
     errors: {},
     allPickups: [],
@@ -29,8 +26,7 @@ class ManagePickups extends Form {
     isEditView: false,
     isGridView: false,
     currentUser: authService.getCurrentUser(),
-    checkboxListSelection: "",
-    checkboxListError: "",
+    checkboxListSelection: [],
     checkboxList: [],
   };
 
@@ -61,9 +57,15 @@ class ManagePickups extends Form {
   }
 
   async getAllItems() {
-    const { data } = await GetAllItems();
+    const { data: AllItems } = await GetAllItems();
 
-    this.setState({ checkboxList: data });
+    //Adding an element Inside the JSON object
+    let processedItems = [...AllItems];
+    processedItems.forEach((item, index) => {
+      processedItems[index] = item = { ...item, isChecked: false };
+    });
+
+    this.setState({ checkboxList: processedItems });
   }
 
   handleModes = (mode) => {
@@ -80,14 +82,69 @@ class ManagePickups extends Form {
     this.setState({ isSpinner: isSpinner });
   };
 
+  resetControls = () => {
+    this.setState({
+      data: {
+        pickupDate: "",
+        pickupTime: "",
+        latitude: "",
+        longitude: "",
+      },
+    });
+  };
+
+  doSubmit_PickupRequestForm = async () => {
+    //Activate Spinner
+    this.isSpinnerActive(true);
+
+    const { currentUser, checkboxListSelection, data } = this.state;
+
+    //Generating object out of checkboxListSelection
+    let requestDetails = checkboxListSelection.map((itemDetail) => {
+      return {
+        idRequestDetail: "",
+        idRequest: "",
+        idItem: itemDetail,
+        itemName: "",
+        itemWeight: 0,
+        itemCost: 0,
+      };
+    });
+
+    const { data: pickupDetails } = await createPickupRequest(
+      currentUser.userId,
+      data.pickupDate,
+      data.pickupTime,
+      data.latitude,
+      data.longitude,
+      requestDetails
+    );
+
+    if (Object.keys(pickupDetails).length > 0) {
+      //Refresh the grid
+      await getAllPickupsByUserId(currentUser.idUser);
+
+      //Switch mode to grid
+      this.handleModes("grid");
+
+      //Reset the fields
+      this.resetControls();
+
+      toast.success("Pickup request generated successfully.");
+    } else {
+      toast.error("Request for pickup failed! Please try again.");
+    }
+
+    //Deactivate Spinner
+    this.isSpinnerActive(false);
+  };
+
   render() {
     const {
       allPickups,
       isEditView,
       isGridView,
       isSpinner,
-      checkboxListSelection,
-      checkboxListError,
       checkboxList,
     } = this.state;
 
@@ -144,14 +201,17 @@ class ManagePickups extends Form {
                   Management
                 </button>
               </div>
-              <form className="col-12 mt-2">
+              <form
+                className="col-12 mt-2"
+                onSubmit={this.handleSubmit_PickupRequestForm}
+              >
                 <div className="row">
                   <div className="col-12 col-sm-12 col-md-6">
                     {this.renderInput(
                       "pickupDate",
                       "Pickup Date",
                       "text",
-                      "Enter Pickup Date MM/DD/YYYY"
+                      "Enter Pickup Date - Format (YYYY/MM/DD)"
                     )}
                   </div>
                   <div className="col-12 col-sm-12 col-md-6">
@@ -159,7 +219,7 @@ class ManagePickups extends Form {
                       "pickupTime",
                       "Pickup Time",
                       "text",
-                      "Enter Pickup Time (HH:MM:SS)"
+                      "Enter Pickup Time - Format (HH:MM:SS)"
                     )}
                   </div>
                   <div className="col-12 col-sm-12 col-md-6">
@@ -168,7 +228,7 @@ class ManagePickups extends Form {
                       "Latitude",
                       "number",
                       "Enter Latitude",
-                      "disabled"
+                      ""
                     )}
                   </div>
                   <div className="col-12 col-sm-12 col-md-6">
@@ -177,17 +237,15 @@ class ManagePickups extends Form {
                       "Longitude",
                       "number",
                       "Enter Longitude",
-                      "disabled"
+                      ""
                     )}
                   </div>
                   <div className="col-12">
-                    <label htmlFor={checkboxListSelection}>My Items</label>
-                    <br />
-                    <CheckBoxList
-                      name={checkboxListSelection}
-                      error={checkboxListError}
-                      itemList={checkboxList}
-                    />
+                    {this.renderCheckboxList(
+                      "ItemCheckboxList",
+                      "Pickup Items",
+                      checkboxList
+                    )}
                   </div>
                   <div className="col-12">
                     {this.renderCustomButton(

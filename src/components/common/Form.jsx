@@ -4,6 +4,7 @@ import Input from "./Input";
 import InputWithoutLabel from "./InputWithoutLabel";
 import Select from "./Select";
 import SelectWithoutLabel from "./SelectWithoutLabel";
+import CheckBoxList from "./CheckboxList";
 import { Fragment } from "react";
 
 class Form extends Component {
@@ -38,6 +39,36 @@ class Form extends Component {
     const { error } = Joi.validate(property, schema);
 
     return error ? error.details[0].message : null;
+  };
+
+  handleChangeCheckboxList = (event) => {
+    const { checkboxList } = this.state;
+
+    let processedItems = [...checkboxList];
+
+    //Finding index of the selected checkbox from the list of Items
+    let itemIndex = processedItems.findIndex(
+      (item) => item.idItem === event.target.id
+    );
+
+    //Updating the isChecked flag of checkbox to true / false based on previous flag state
+    processedItems[itemIndex].isChecked = !processedItems[itemIndex].isChecked;
+
+    /*
+     * Processing the cloned CheckboxList to get only those id's whose isChecked flag is true
+     * and setting data.pickupItems in state object
+     */
+    let selectedItems = [];
+    processedItems.forEach((item) => {
+      if (item.isChecked) {
+        selectedItems.push(item.idItem);
+      }
+    });
+
+    this.setState({
+      checkboxList: processedItems,
+      checkboxListSelection: selectedItems,
+    });
   };
 
   validate = () => {
@@ -98,6 +129,29 @@ class Form extends Component {
     if (errors) return;
 
     this.doSubmit_VerifyAccountForm();
+  };
+
+  handleSubmit_PickupRequestForm = (e) => {
+    //Prevent from default behaviour of form submission
+    e.preventDefault();
+
+    //If All Fields are Validated
+    let errors = this.validate();
+
+    //Case only for checkbox List
+    if (this.state.checkboxListSelection.length === 0 && errors === null) {
+      errors = {
+        ...errors,
+        ItemCheckboxList: "Please select atleast one pickup item.",
+      };
+    }
+
+    //Update errors state
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
+
+    this.doSubmit_PickupRequestForm();
   };
 
   renderButton(label) {
@@ -223,6 +277,21 @@ class Form extends Component {
         dataTextfield={dataTextfield}
         dataValuefield={dataValuefield}
         onChange={this.handleChange}
+        error={errors[name]}
+      />
+    );
+  }
+
+  renderCheckboxList(name, label, itemList) {
+    //object destructuring
+    const { errors } = this.state;
+
+    return (
+      <CheckBoxList
+        name={name}
+        label={label}
+        itemList={itemList}
+        onChange={this.handleChangeCheckboxList}
         error={errors[name]}
       />
     );
