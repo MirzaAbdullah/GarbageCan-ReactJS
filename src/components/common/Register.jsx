@@ -106,49 +106,69 @@ class Register extends Form {
 
   render() {
     const { currentUser, isSpinner } = this.state;
+    const { handleModes } = this.props;
+
     if (currentUser) return <Redirect to="/dashboard" />;
 
     return (
       <form onSubmit={this.handleSubmit_RegisterForm}>
-        <div className="text-center">
-          <h1 className="h3 mb-3 font-weight-normal">Sign Up</h1>
+        <div className="text-center mb-3">
+          <h6 className="h5">Welcome to GarbageCAN (Pvt.) Ltd</h6>
+          <span>
+            Please register below or{" "}
+            <a href="javascript:void(0)" onClick={() => handleModes("login")}>
+              already have account?
+            </a>
+          </span>
         </div>
-        {this.renderInputWithoutLabel(
-          "firstName",
-          "First Name",
-          "text",
-          "Enter First Name"
-        )}
-        {this.renderInputWithoutLabel(
-          "lastName",
-          "Last Name",
-          "text",
-          "Enter Last Name"
-        )}
-        {this.renderInputWithoutLabel(
-          "phoneNo",
-          "Phone Number",
-          "number",
-          "Enter Phone Number"
-        )}
-        {this.renderInputWithoutLabel(
-          "name",
-          "Username",
-          "text",
-          "Enter Username"
-        )}
-        {this.renderInputWithoutLabel(
-          "emailRegister",
-          "Email",
-          "email",
-          "Enter Email"
-        )}
-        {this.renderInputWithoutLabel(
-          "passwordRegister",
-          "Password",
-          "password",
-          "Enter Password"
-        )}
+        <div className="mb-2">
+          {this.renderInputWithoutLabel(
+            "firstName",
+            "First Name",
+            "text",
+            "Enter First Name"
+          )}
+        </div>
+        <div className="mb-2">
+          {this.renderInputWithoutLabel(
+            "lastName",
+            "Last Name",
+            "text",
+            "Enter Last Name"
+          )}
+        </div>
+        <div className="mb-2">
+          {this.renderInputWithoutLabel(
+            "phoneNo",
+            "Phone Number",
+            "number",
+            "Enter Phone Number"
+          )}
+        </div>
+        <div className="mb-2">
+          {this.renderInputWithoutLabel(
+            "name",
+            "Username",
+            "text",
+            "Enter Username"
+          )}
+        </div>
+        <div className="mb-2">
+          {this.renderInputWithoutLabel(
+            "emailRegister",
+            "Email",
+            "email",
+            "Enter Email"
+          )}
+        </div>
+        <div className="mb-2">
+          {this.renderInputWithoutLabel(
+            "passwordRegister",
+            "Password",
+            "password",
+            "Enter Password"
+          )}
+        </div>
         {this.renderCustomButton(
           "Sign Up",
           "btn btn-lg btn-primary btn-block mt-3",
