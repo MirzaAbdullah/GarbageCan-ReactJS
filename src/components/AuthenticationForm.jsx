@@ -129,7 +129,7 @@ class AuthenticationForm extends Form {
             )}
             {isRegisterView && (
               <div className="col-12 col-md-12">
-                <div className="col-8 offset-2">
+                <div className="col-12 col-sm-12 col-md-4 offset-md-4">
                   <Register handleModes={this.handleModes} />
                 </div>
               </div>
