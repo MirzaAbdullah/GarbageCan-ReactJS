@@ -116,7 +116,7 @@ class Register extends Form {
           <h6 className="h5">Welcome to GarbageCAN (Pvt.) Ltd</h6>
           <span>
             Please register below or{" "}
-            <a href="javascript:void(0)" onClick={() => handleModes("login")}>
+            <a href="#/" onClick={() => handleModes("login")}>
               already have account?
             </a>
           </span>
