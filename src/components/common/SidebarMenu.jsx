@@ -42,6 +42,14 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
             >
               Manage Pickups
             </button>
+            <button
+              type="button"
+              className="list-group-item list-group-item-action"
+              onClick={() => onItemSelect("VerifyAccount")}
+              id="VerifyAccount"
+            >
+              Verify Account
+            </button>
           </Fragment>
         )}
         {userRole === "2" && (

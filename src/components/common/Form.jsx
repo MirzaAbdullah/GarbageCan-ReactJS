@@ -88,6 +88,18 @@ class Form extends Component {
     this.doSubmit_ChangePasswordForm();
   };
 
+  handleSubmit_VerifyAccountForm = (e) => {
+    //Prevent from default behaviour of form submission
+    e.preventDefault();
+
+    const errors = this.validate();
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
+
+    this.doSubmit_VerifyAccountForm();
+  };
+
   renderButton(label) {
     return (
       <button disabled={this.validate()} className="btn btn-primary">
