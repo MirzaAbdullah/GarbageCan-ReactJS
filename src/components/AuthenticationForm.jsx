@@ -92,7 +92,7 @@ class AuthenticationForm extends Form {
                       <span>
                         Please sign in below or{" "}
                         <a
-                          href="javascript:void(0)"
+                          href="#/"
                           onClick={() => this.handleModes("register")}
                         >
                           create an account
@@ -116,7 +116,7 @@ class AuthenticationForm extends Form {
                       )}
                     </div>
                     <div className="text-right">
-                      <a href=".">Forget Password?</a>
+                      <a href="#/">Forget Password?</a>
                     </div>
                     {this.renderCustomButton(
                       "Sign In",
