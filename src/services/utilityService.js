@@ -10,6 +10,10 @@ export async function GetAllItems(){
     return http.get(`${apiEndpoint}/GetAllItems`);
 }
 
+export async function GetUserDetailsById(userId){
+    return http.get(`${apiEndpoint}/GetUserDetailsById/${userId}`);
+}
+
 export default{
     getAllRoles,
     GetAllItems

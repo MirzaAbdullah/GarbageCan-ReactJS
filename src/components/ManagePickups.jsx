@@ -2,23 +2,35 @@ import React from "react";
 import Form from "./common/Form";
 import Joi from "joi-browser";
 import { toast } from "react-toastify";
+import Geocode from "react-geocode";
 
+//Services
 import {
   getAllPickupsByUserId,
   createPickupRequest,
 } from "../services/pickupService";
 import authService from "../services/authService";
-import { GetAllItems } from "../services/utilityService";
+import { GetAllItems, GetUserDetailsById } from "../services/utilityService";
 
+//Components
 import ManagePickupGrid from "./common/ManagePickupGrid";
+
+import MarkerMap from "./maps/MarkerMap";
+
+// setting response language. Defaults to english.
+Geocode.setLanguage("en");
+
+// setting the google map key
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+
+// And according to the below google docs in description, ROOFTOP param returns the most accurate result.
+Geocode.setLocationType("ROOFTOP");
 
 class ManagePickups extends Form {
   state = {
     data: {
       pickupDate: "",
       pickupTime: "",
-      latitude: "",
-      longitude: "",
     },
     errors: {},
     allPickups: [],
@@ -28,13 +40,15 @@ class ManagePickups extends Form {
     currentUser: authService.getCurrentUser(),
     checkboxListSelection: [],
     checkboxList: [],
+    isUserHasAddress: false,
+    userAddress: "",
+    latitude: 0.0,
+    longitude: 0.0,
   };
 
   schema = {
     pickupDate: Joi.string().required().label("Pickup Date"),
     pickupTime: Joi.string().required().label("Pickup Time"),
-    latitude: Joi.string().required().label("Latitude"),
-    longitude: Joi.string().required().label("Longitude"),
   };
 
   async componentDidMount() {
@@ -48,7 +62,47 @@ class ManagePickups extends Form {
 
     //Getting all Items
     await this.getAllItems();
+
+    //Getting current user address
+    await this.isUserHasAddress().then(() => this.getLatLngFromAddress());
   }
+
+  async isUserHasAddress() {
+    const { currentUser } = this.state;
+
+    let isAddressExists = false,
+      address = "";
+
+    const { data: userDetails } = await GetUserDetailsById(currentUser.userId);
+
+    if (userDetails.idUserDetail) {
+      address = `${userDetails.address1}, ${userDetails.address2}, ${userDetails.city}, ${userDetails.province}, ${userDetails.country}`;
+      isAddressExists = true;
+    }
+
+    this.setState({
+      isUserHasAddress: isAddressExists,
+      userAddress: address,
+    });
+  }
+
+  getLatLngFromAddress = () => {
+    const { userAddress } = this.state;
+
+    // Get latitude & longitude from address.
+    Geocode.fromAddress(userAddress).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        this.setState({
+          latitude: lat,
+          longitude: lng,
+        });
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
 
   async getAllPickupsByUserId(userId) {
     const { data: pickups } = await getAllPickupsByUserId(userId);
@@ -97,7 +151,13 @@ class ManagePickups extends Form {
     //Activate Spinner
     this.isSpinnerActive(true);
 
-    const { currentUser, checkboxListSelection, data } = this.state;
+    const {
+      currentUser,
+      checkboxListSelection,
+      data,
+      latitude,
+      longitude,
+    } = this.state;
 
     //Generating object out of checkboxListSelection
     let requestDetails = checkboxListSelection.map((itemDetail) => {
@@ -115,8 +175,8 @@ class ManagePickups extends Form {
       currentUser.userId,
       data.pickupDate,
       data.pickupTime,
-      data.latitude,
-      data.longitude,
+      latitude,
+      longitude,
       requestDetails
     );
 
@@ -146,6 +206,10 @@ class ManagePickups extends Form {
       isGridView,
       isSpinner,
       checkboxList,
+      latitude,
+      longitude,
+      userAddress,
+      isUserHasAddress,
     } = this.state;
 
     if (allPickups.length === 0) {
@@ -171,6 +235,7 @@ class ManagePickups extends Form {
                   type="button"
                   className="btn btn-primary"
                   onClick={() => this.handleModes("edit")}
+                  disabled={!isUserHasAddress}
                 >
                   <i className="fas fa-plus"></i>&nbsp;Create Pickup
                 </button>
@@ -202,7 +267,7 @@ class ManagePickups extends Form {
                 </button>
               </div>
               <form
-                className="col-12 mt-2"
+                className="col-12 mt-2 mb-2"
                 onSubmit={this.handleSubmit_PickupRequestForm}
               >
                 <div className="row">
@@ -222,23 +287,25 @@ class ManagePickups extends Form {
                       "Enter Pickup Time - Format (HH:MM:SS)"
                     )}
                   </div>
-                  <div className="col-12 col-sm-12 col-md-6">
-                    {this.renderInputDisable(
-                      "latitude",
-                      "Latitude",
-                      "number",
-                      "Enter Latitude",
-                      ""
-                    )}
+                  <div className="col-12 col-sm-12 col-md-12 mb-3">
+                    <label htmlFor="address">Address</label>
+                    <textarea
+                      id="address"
+                      value={userAddress}
+                      className="form-control"
+                      disabled
+                    ></textarea>
                   </div>
-                  <div className="col-12 col-sm-12 col-md-6">
-                    {this.renderInputDisable(
-                      "longitude",
-                      "Longitude",
-                      "number",
-                      "Enter Longitude",
-                      ""
-                    )}
+                  <div className="col-12 mb-2">
+                    <MarkerMap
+                      isMarkerShown
+                      googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&v=3.exp&libraries=geometry,drawing,places`}
+                      loadingElement={<div style={{ height: `100%` }} />}
+                      containerElement={<div style={{ height: `400px` }} />}
+                      mapElement={<div style={{ height: `100%` }} />}
+                      latitude={latitude}
+                      longitude={longitude}
+                    />
                   </div>
                   <div className="col-12">
                     {this.renderCheckboxList(

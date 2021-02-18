@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./Input";
 import InputWithoutLabel from "./InputWithoutLabel";
+import InputWithClasses from "./InputWithClasses";
 import Select from "./Select";
 import SelectWithoutLabel from "./SelectWithoutLabel";
 import CheckBoxList from "./CheckboxList";
@@ -223,6 +224,24 @@ class Form extends Component {
       <InputWithoutLabel
         name={name}
         value={data[name]}
+        type={type}
+        label={label}
+        onChange={this.handleChange}
+        error={errors[name]}
+        placeholder={placeholder}
+      />
+    );
+  }
+
+  renderInputWithClasses(name, label, extraClasses, type, placeholder) {
+    //object destructuring
+    const { data, errors } = this.state;
+
+    return (
+      <InputWithClasses
+        name={name}
+        value={data[name]}
+        extraClasses={extraClasses}
         type={type}
         label={label}
         onChange={this.handleChange}
