@@ -15,9 +15,9 @@ export async function createPickupRequest(userId, pickupDate, pickupTime, latitu
         idUser: userId,
         pickupDate: pickupDate,
         pickupTime: pickupTime,
-        pickupCost: 0,
-        latitude: latitude,
-        longitude: longitude,
+        pickup_Cost: 0,
+        latitudes: latitude,
+        longitudes: longitude,
         createdDate: new Date(),
         requestDetails: requestDetails
       });
