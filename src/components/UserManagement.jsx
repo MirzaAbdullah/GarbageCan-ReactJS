@@ -254,99 +254,110 @@ class UserManagement extends Form {
         cursor: "pointer",
       };
 
-    if (allUsers.length === 0) {
-      return (
-        <div className="text-center mt-5">
-          <span style={{ opacity: 0.7 }}>There are no registered users</span>
-        </div>
-      );
-    }
-
     return (
-      <div className="row mt-2">
+      <React.Fragment>
         {isGridView && (
           <React.Fragment>
-            <div className="col-12 col-sm-12 col-md-6">
-              <h4>
-                <i className="fas fa-users"></i> User Management
-              </h4>
-            </div>
-            <div className="col-12 col-sm-12 col-md-6 text-right">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => this.handleModes("edit")}
-              >
-                <i className="fas fa-plus"></i> Add User
-              </button>
+            <div className="row mt-2">
+              <div className="col-12 col-sm-12 col-md-6 p-0">
+                <h4>
+                  <i className="fas fa-users"></i> User Management
+                </h4>
+              </div>
+              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => this.handleModes("edit")}
+                >
+                  <i className="fas fa-plus"></i> Add User
+                </button>
+              </div>
             </div>
             <div className="row mt-3 mb-3">
-              <div className="col-12">
-                <TableContainer component={Paper}>
-                  <Table
-                    className={this.useStyles.table}
-                    aria-label="simple table"
-                  >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell className="font-weight-bold">Name</TableCell>
-                        <TableCell className="font-weight-bold">
-                          Email
-                        </TableCell>
-                        <TableCell className="font-weight-bold">
-                          Phone No
-                        </TableCell>
-                        <TableCell className="font-weight-bold">Role</TableCell>
-                        <TableCell className="font-weight-bold">Date</TableCell>
-                        <TableCell className="font-weight-bold">
-                          Verified
-                        </TableCell>
-                        <TableCell></TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {allUsers
-                        .sort(
-                          (a, b) =>
-                            new Date(b.createdDate) - new Date(a.createdDate)
-                        )
-                        .map((allUser) => (
-                          <TableRow key={allUser.idUser}>
-                            <TableCell component="th" scope="row">
-                              {allUser.name}
-                            </TableCell>
-                            <TableCell>{allUser.email}</TableCell>
-                            <TableCell>{allUser.phoneNo}</TableCell>
-                            <TableCell>{allUser.nameRole}</TableCell>
-                            <TableCell>
-                              {this.handleDateFormat(allUser.createdDate)}
-                            </TableCell>
-                            <TableCell className="text-center">
-                              <i
-                                className={this.handleVerifiedIcon(
-                                  allUser.isVerified
-                                )}
-                              ></i>
-                            </TableCell>
-                            <TableCell>
-                              <a
-                                onClick={() =>
-                                  this.updateSelectedKey(allUser.idUser)
-                                }
-                                data-toggle="modal"
-                                data-target="#garbageCanModal"
-                                href="/#"
-                                className="text-danger ml-1"
-                                style={cursorPointer}
-                              >
-                                <i className="far fa-2x fa-trash-alt"></i>
-                              </a>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+              <div className="col-12 p-0">
+                {allUsers.length === 0 && (
+                  <React.Fragment>
+                    <div className="text-center mt-5">
+                      <span style={{ opacity: 0.7 }}>
+                        There are no registered users.
+                      </span>
+                    </div>
+                  </React.Fragment>
+                )}
+                {allUsers.length > 0 && (
+                  <TableContainer component={Paper}>
+                    <Table
+                      className={this.useStyles.table}
+                      aria-label="simple table"
+                    >
+                      <TableHead>
+                        <TableRow>
+                          <TableCell className="font-weight-bold">
+                            Name
+                          </TableCell>
+                          <TableCell className="font-weight-bold">
+                            Email
+                          </TableCell>
+                          <TableCell className="font-weight-bold">
+                            Phone No
+                          </TableCell>
+                          <TableCell className="font-weight-bold">
+                            Role
+                          </TableCell>
+                          <TableCell className="font-weight-bold">
+                            Date
+                          </TableCell>
+                          <TableCell className="font-weight-bold">
+                            Verified
+                          </TableCell>
+                          <TableCell></TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {allUsers
+                          .sort(
+                            (a, b) =>
+                              new Date(b.createdDate) - new Date(a.createdDate)
+                          )
+                          .map((allUser) => (
+                            <TableRow key={allUser.idUser}>
+                              <TableCell component="th" scope="row">
+                                {allUser.name}
+                              </TableCell>
+                              <TableCell>{allUser.email}</TableCell>
+                              <TableCell>{allUser.phoneNo}</TableCell>
+                              <TableCell>{allUser.nameRole}</TableCell>
+                              <TableCell>
+                                {this.handleDateFormat(allUser.createdDate)}
+                              </TableCell>
+                              <TableCell className="text-center">
+                                <i
+                                  className={this.handleVerifiedIcon(
+                                    allUser.isVerified
+                                  )}
+                                ></i>
+                              </TableCell>
+                              <TableCell>
+                                <a
+                                  onClick={() =>
+                                    this.updateSelectedKey(allUser.idUser)
+                                  }
+                                  data-toggle="modal"
+                                  data-target="#garbageCanModal"
+                                  href="/#"
+                                  className="text-danger ml-1"
+                                  style={cursorPointer}
+                                >
+                                  <i className="far fa-2x fa-trash-alt"></i>
+                                </a>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
               </div>
             </div>
             <ModalConfirmation
@@ -360,70 +371,77 @@ class UserManagement extends Form {
         )}
         {isEditView && (
           <React.Fragment>
-            <div className="col-12 col-sm-12 col-md-6">
-              <h4>
-                <i className="fas fa-plus"></i> Add User
-              </h4>
-            </div>
-            <div className="col-12 col-sm-12 col-md-6 text-right">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => this.handleModes("grid")}
-              >
-                <i className="fas fa-users"></i> Back to User Management
-              </button>
-            </div>
-            <div className="col-12 col-sm-12 col-md-12 mt-2 mb-2">
-              <form onSubmit={this.handleSubmit_RegisterForm}>
-                {this.renderInput(
-                  "firstName",
-                  "First Name",
-                  "text",
-                  "Enter First Name"
-                )}
-                {this.renderInput(
-                  "lastName",
-                  "Last Name",
-                  "text",
-                  "Enter Last Name"
-                )}
-                {this.renderInput(
-                  "phoneNo",
-                  "Phone Number",
-                  "number",
-                  "Enter Phone Number"
-                )}
-                {this.renderInput("name", "Username", "text", "Enter Username")}
-                {this.renderInput(
-                  "emailRegister",
-                  "Email",
-                  "email",
-                  "Enter Email"
-                )}
-                {this.renderInput(
-                  "passwordRegister",
-                  "Password",
-                  "password",
-                  "Enter Password"
-                )}
-                {this.renderSelect(
-                  "roleId",
-                  "Roles",
-                  this.state.roles,
-                  "roleName",
-                  "roleId"
-                )}
-                {this.renderCustomButton(
-                  "Add User",
-                  "btn btn-lg btn-primary btn-block mt-3",
-                  isSpinner
-                )}
-              </form>
+            <div className="row mt-2">
+              <div className="col-12 col-sm-12 col-md-6 p-0">
+                <h4>
+                  <i className="fas fa-plus"></i> Add User
+                </h4>
+              </div>
+              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => this.handleModes("grid")}
+                >
+                  <i className="fas fa-users"></i> Back to User Management
+                </button>
+              </div>
+              <div className="col-12 col-sm-12 col-md-12 mt-2 mb-2 p-0">
+                <form onSubmit={this.handleSubmit_RegisterForm}>
+                  {this.renderInput(
+                    "firstName",
+                    "First Name",
+                    "text",
+                    "Enter First Name"
+                  )}
+                  {this.renderInput(
+                    "lastName",
+                    "Last Name",
+                    "text",
+                    "Enter Last Name"
+                  )}
+                  {this.renderInput(
+                    "phoneNo",
+                    "Phone Number",
+                    "number",
+                    "Enter Phone Number"
+                  )}
+                  {this.renderInput(
+                    "name",
+                    "Username",
+                    "text",
+                    "Enter Username"
+                  )}
+                  {this.renderInput(
+                    "emailRegister",
+                    "Email",
+                    "email",
+                    "Enter Email"
+                  )}
+                  {this.renderInput(
+                    "passwordRegister",
+                    "Password",
+                    "password",
+                    "Enter Password"
+                  )}
+                  {this.renderSelect(
+                    "roleId",
+                    "Roles",
+                    this.state.roles,
+                    "roleName",
+                    "roleId"
+                  )}
+                  {this.renderCustomButton(
+                    "Add User",
+                    "btn btn-lg btn-primary btn-block mt-3",
+                    isSpinner
+                  )}
+                </form>
+              </div>
             </div>
           </React.Fragment>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }
