@@ -144,6 +144,7 @@ class ManagePickups extends Form {
         latitude: "",
         longitude: "",
       },
+      checkboxListSelection: [],
     });
   };
 
@@ -212,38 +213,45 @@ class ManagePickups extends Form {
       isUserHasAddress,
     } = this.state;
 
-    if (allPickups.length === 0) {
-      return (
-        <div className="text-center mt-5">
-          <span style={{ opacity: 0.7 }}>There are no requested pickups.</span>
-        </div>
-      );
-    }
-
     return (
       <React.Fragment>
         {isGridView && (
           <React.Fragment>
             <div className="row mt-2">
-              <div className="col-12 col-sm-12 col-md-6">
+              <div className="col-12 col-sm-12 col-md-6 p-0">
                 <h4>
                   <i className="fas fa-truck-pickup"></i> Pickups Management
                 </h4>
               </div>
-              <div className="col-12 col-sm-12 col-md-6 text-right">
+              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
                 <button
                   type="button"
                   className="btn btn-primary"
+                  id="btnCreatePickup"
                   onClick={() => this.handleModes("edit")}
                   disabled={!isUserHasAddress}
+                  data-toggle="tooltip"
+                  data-placement="left"
+                  title="Button will be disabled, only if address is not registered."
                 >
                   <i className="fas fa-plus"></i>&nbsp;Create Pickup
                 </button>
               </div>
             </div>
             <div className="row mt-3 mb-3">
-              <div className="col-12">
-                <ManagePickupGrid allPickupsData={allPickups} />
+              <div className="col-12 p-0">
+                {allPickups.length === 0 && (
+                  <React.Fragment>
+                    <div className="text-center mt-5">
+                      <span style={{ opacity: 0.7 }}>
+                        There are no requested pickups.
+                      </span>
+                    </div>
+                  </React.Fragment>
+                )}
+                {allPickups.length > 0 && (
+                  <ManagePickupGrid allPickupsData={allPickups} />
+                )}
               </div>
             </div>
           </React.Fragment>
@@ -251,12 +259,12 @@ class ManagePickups extends Form {
         {isEditView && (
           <React.Fragment>
             <div className="row mt-2">
-              <div className="col-12 col-sm-12 col-md-6">
+              <div className="col-12 col-sm-12 col-md-6 p-0">
                 <h4>
                   <i className="fas fa-plus"></i> Create Pickup
                 </h4>
               </div>
-              <div className="col-12 col-sm-12 col-md-6 text-right">
+              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -267,7 +275,7 @@ class ManagePickups extends Form {
                 </button>
               </div>
               <form
-                className="col-12 mt-2 mb-2"
+                className="col-12 mt-2 mb-2 p-0"
                 onSubmit={this.handleSubmit_PickupRequestForm}
               >
                 <div className="row">

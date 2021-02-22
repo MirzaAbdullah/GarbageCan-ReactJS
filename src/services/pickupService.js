@@ -6,6 +6,14 @@ export async function getAllPickupsByUserId(userId){
     return await http.get(`${apiEndpoint}/GetPickupRequestByUserId/${userId}`);
 }
 
+export async function getPickupRequestById(requestId){
+    return await http.get(`${apiEndpoint}/GetPickupRequestById/${requestId}`);
+}
+
+export async function getPickupRequestByStatus(status){
+    return await http.get(`${apiEndpoint}/GetPickupRequestByStatus/${status}`);
+}
+
 export async function deletePickupRequest(pcikupId){
     return await http.delete(`${apiEndpoint}/DeletePickupRequest/${pcikupId}`);
 }
@@ -26,5 +34,7 @@ export async function createPickupRequest(userId, pickupDate, pickupTime, latitu
 export default{
     getAllPickupsByUserId,
     deletePickupRequest,
-    createPickupRequest
+    createPickupRequest,
+    getPickupRequestByStatus,
+    getPickupRequestById
 }

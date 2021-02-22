@@ -62,6 +62,10 @@ export async function getUserById(userId){
   return await http.get(`${apiEndpoint}/GetUserById/${userId}`);
 }
 
+export async function getUsersByRoleId(roleId){
+  return await http.get(`${apiEndpoint}/GetUsersByRoleId/${roleId}`);
+}
+
 export async function isUserEmailExists(email){
   return await http.get(`${apiEndpoint}/IsUserExists/${email}`);
 }
@@ -106,5 +110,6 @@ export default {
   changePassword,
   sendVerificationCode,
   verifyUser,
-  getUserById
+  getUserById,
+  getUsersByRoleId
 };
