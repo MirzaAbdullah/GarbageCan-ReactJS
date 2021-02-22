@@ -98,7 +98,9 @@ class ManageAssignGrid extends Component {
                     <TableCell>{pickup.driverName}</TableCell>
                     <TableCell>{pickup.driverEmail}</TableCell>
                     <TableCell>{pickup.driverPhoneNo}</TableCell>
-                    <TableCell>{pickup.requestDetails.length}</TableCell>
+                    <TableCell align="center">
+                      {pickup.requestDetails.length}
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell
@@ -142,30 +144,38 @@ class ManageAssignGrid extends Component {
                                 </TableRow>
                               )}
                               {pickup.requestDetails.length > 0 &&
-                                pickup.requestDetails.map((requestDetail) => (
-                                  <TableRow key={requestDetail.assignId}>
-                                    <TableCell component="th" scope="row">
-                                      {requestDetail.pickupDate}
-                                    </TableCell>
-                                    <TableCell>
-                                      {requestDetail.pickupTime}
-                                    </TableCell>
-                                    <TableCell>
-                                      {requestDetail.address}
-                                    </TableCell>
-                                    <TableCell>
-                                      <a
-                                        data-toggle="modal"
-                                        data-target="#garbageCanModal"
-                                        href="/#"
-                                        className="text-danger ml-1"
-                                        style={{ cursor: "pointer" }}
-                                      >
-                                        <i className="far fa-2x fa-trash-alt"></i>
-                                      </a>
-                                    </TableCell>
-                                  </TableRow>
-                                ))}
+                                pickup.requestDetails
+                                  .sort(
+                                    (a, b) =>
+                                      new Date(a.pickupDate) -
+                                      new Date(b.pickupDate)
+                                  )
+                                  .map((requestDetail) => (
+                                    <TableRow key={requestDetail.assignId}>
+                                      <TableCell component="th" scope="row">
+                                        {this.handleDateFormat(
+                                          requestDetail.pickupDate
+                                        )}
+                                      </TableCell>
+                                      <TableCell>
+                                        {requestDetail.pickupTime}
+                                      </TableCell>
+                                      <TableCell>
+                                        {requestDetail.address}
+                                      </TableCell>
+                                      <TableCell>
+                                        <a
+                                          data-toggle="modal"
+                                          data-target="#garbageCanModal"
+                                          href="/#"
+                                          className="text-danger ml-1"
+                                          style={{ cursor: "pointer" }}
+                                        >
+                                          <i className="far fa-2x fa-trash-alt"></i>
+                                        </a>
+                                      </TableCell>
+                                    </TableRow>
+                                  ))}
                             </TableBody>
                           </Table>
                         </Box>
