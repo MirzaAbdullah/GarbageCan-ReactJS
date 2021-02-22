@@ -9,6 +9,11 @@ export async function assignPickup(driverId, requestIds ){
       });
 }
 
+export async function getAllAssignPickupsByDriverId(driverId){
+    return await http.get(`${apiEndpoint}/GetAllAssignPickupsByDriverId/${driverId}`);
+}
+
 export default{
-    assignPickup
+    assignPickup,
+    getAllAssignPickupsByDriverId
 }

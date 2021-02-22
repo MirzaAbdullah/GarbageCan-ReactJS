@@ -4,10 +4,17 @@ import { toast } from "react-toastify";
 import Form from "./common/Form";
 
 //Services
-import { getPickupRequestByStatus } from "../services/pickupService";
+import {
+  getPickupRequestByStatus,
+  getPickupRequestById,
+} from "../services/pickupService";
 import { GetUserDetailsById } from "../services/utilityService";
 import { getUsersByRoleId } from "../services/authService";
-import { assignPickup } from "../services/assignService";
+import {
+  assignPickup,
+  getAllAssignPickupsByDriverId,
+} from "../services/assignService";
+import ManageAssignGrid from "./common/ManageAssignGrid";
 
 class AssignPickups extends Form {
   state = {
@@ -33,12 +40,70 @@ class AssignPickups extends Form {
     //Set isGridView = true & isEditView = false
     this.setState({ isGridView: true, isEditView: false });
 
-    //Setting getPickup by Status
+    //Getting all Request
+    await this.getAllAssignRequests();
+
+    //Setting getPickup by Status = InProcess
     await this.getAllPickupRequestByStatus("InProcess");
 
     //Fill ddlDrivers
     await this.getAllDrivers();
   }
+
+  getAllAssignRequests = async () => {
+    let allDriversRequest = [];
+
+    //Getting all Drivers
+    const { data: drivers } = await getUsersByRoleId(2);
+    drivers.forEach(async (driver) => {
+      ///Getting current Driver All Request
+      const driverRequestsList = await this.groupAllAssignedRequests(
+        driver.idUser
+      );
+
+      allDriversRequest.push({
+        driverId: driver.idUser,
+        driverName: driver.name,
+        driverEmail: driver.email,
+        driverPhoneNo: driver.phoneNo,
+        requestDetails: driverRequestsList,
+      });
+    });
+
+    this.setState({ allAssignedRequests: allDriversRequest });
+  };
+
+  groupAllAssignedRequests = async (driverId) => {
+    let allPickups = [];
+
+    //Getting all Requests against Driver Id
+    const { data: pickupRequests } = await getAllAssignPickupsByDriverId(
+      driverId
+    );
+
+    pickupRequests.forEach(async (pickup) => {
+      //Getting all Information for current Request Id
+      const { data: pickupRequestData } = await getPickupRequestById(
+        pickup.idRequest
+      );
+
+      //Getting Requested User Details
+      const { data: userDetails } = await GetUserDetailsById(
+        pickupRequestData.idUser
+      );
+
+      //Pushing data to allPickups Array
+      allPickups.push({
+        assignId: pickup.idAssign,
+        requestId: pickup.idRequest,
+        pickupDate: this.handleDateFormat(pickupRequestData.pickupDate),
+        pickupTime: pickupRequestData.pickupTime,
+        address: `${userDetails.address2}, ${userDetails.city}, ${userDetails.province}, ${userDetails.country}`,
+      });
+    });
+
+    return allPickups;
+  };
 
   async getAllPickupRequestByStatus(status) {
     const { data: pickupRequests } = await getPickupRequestByStatus(status);
@@ -156,27 +221,20 @@ class AssignPickups extends Form {
       isGridView,
       isEditView,
       isSpinner,
+      allAssignedRequests,
     } = this.state;
-
-    // if (allAssignedRequests.length === 0) {
-    //   return (
-    //     <div className="text-center mt-5">
-    //       <span style={{ opacity: 0.7 }}>There are no assigned requests.</span>
-    //     </div>
-    //   );
-    // }
 
     return (
       <React.Fragment>
         {isGridView && (
           <React.Fragment>
             <div className="row mt-2">
-              <div className="col-12 col-sm-12 col-md-6">
+              <div className="col-12 col-sm-12 col-md-6 p-0">
                 <h4>
                   <i className="fas fa-dolly"></i> Assign Pickup's Management
                 </h4>
               </div>
-              <div className="col-12 col-sm-12 col-md-6 text-right">
+              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -187,19 +245,32 @@ class AssignPickups extends Form {
               </div>
             </div>
             <div className="row mt-3 mb-3">
-              <div className="col-12"></div>
+              <div className="col-12 p-0">
+                {allAssignedRequests.length === 0 && (
+                  <React.Fragment>
+                    <div className="text-center mt-5">
+                      <span style={{ opacity: 0.7 }}>
+                        There are no assigned requests.
+                      </span>
+                    </div>
+                  </React.Fragment>
+                )}
+                {allAssignedRequests.length > 0 && (
+                  <ManageAssignGrid allAssignPickupData={allAssignedRequests} />
+                )}
+              </div>
             </div>
           </React.Fragment>
         )}
         {isEditView && (
           <React.Fragment>
             <div className="row mt-2">
-              <div className="col-12 col-sm-12 col-md-6">
+              <div className="col-12 col-sm-12 col-md-6 p-0">
                 <h4>
                   <i className="fas fa-plus"></i> Assign Pickup
                 </h4>
               </div>
-              <div className="col-12 col-sm-12 col-md-6 text-right">
+              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -211,7 +282,7 @@ class AssignPickups extends Form {
               </div>
             </div>
             <div className="row mt-3 mb-3">
-              <div className="col-12">
+              <div className="col-12 p-0">
                 <form onSubmit={this.handleSubmit_AssignPickupForm}>
                   {this.renderSelect(
                     "ddlAllDrivers",

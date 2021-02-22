@@ -126,12 +126,12 @@ class VerifyAccount extends Form {
     return (
       <React.Fragment>
         <div className="row mt-2">
-          <div className="col-12 col-sm-12 col-md-6">
+          <div className="col-12 col-sm-12 col-md-6 p-0">
             <h4>
               <i className="fas fa-certificate"></i> Verify Account
             </h4>
           </div>
-          <div className="col-12 col-sm-12 col-md-6 text-right">
+          <div className="col-12 col-sm-12 col-md-6 text-right p-0">
             <button
               type="button"
               className="btn btn-primary"
@@ -156,21 +156,23 @@ class VerifyAccount extends Form {
             </button>
           </div>
         </div>
-        <div className="col-12 col-sm-12 col-md-12 mt-2 mb-2 p-0">
-          <form onSubmit={this.handleSubmit_VerifyAccountForm}>
-            {this.renderInputDisable(
-              "verificationCode",
-              "Verification Code",
-              "number",
-              "Enter Verification Code",
-              isTextBoxDisabled
-            )}
-            {this.renderCustomButton(
-              "Verify",
-              "btn btn-lg btn-primary btn-block mt-3",
-              isSpinner && data.verificationCode !== ""
-            )}
-          </form>
+        <div className="row mt-2 mb-2">
+          <div className="col-12 col-sm-12 col-md-12  p-0">
+            <form onSubmit={this.handleSubmit_VerifyAccountForm}>
+              {this.renderInputDisable(
+                "verificationCode",
+                "Verification Code",
+                "number",
+                "Enter Verification Code",
+                isTextBoxDisabled
+              )}
+              {this.renderCustomButton(
+                "Verify",
+                "btn btn-lg btn-primary btn-block mt-3",
+                isSpinner && data.verificationCode !== ""
+              )}
+            </form>
+          </div>
         </div>
       </React.Fragment>
     );
