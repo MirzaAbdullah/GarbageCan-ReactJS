@@ -176,7 +176,7 @@ class ManagePickupGrid extends Component {
                         data-target="#garbageCanModal"
                         href="/#"
                         className={`text-danger ml-1 ${
-                          pickup.pickupStatus === "Completed"
+                          pickup.pickupStatus !== "InProcess"
                             ? "anchorDisabled"
                             : ""
                         }`}

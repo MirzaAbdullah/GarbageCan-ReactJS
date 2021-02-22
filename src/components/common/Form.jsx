@@ -132,6 +132,29 @@ class Form extends Component {
     this.doSubmit_VerifyAccountForm();
   };
 
+  handleSubmit_AssignPickupForm = (e) => {
+    //Prevent from default behaviour of form submission
+    e.preventDefault();
+
+    //If All Fields are Validated
+    let errors = this.validate();
+
+    //Case only for checkbox List
+    if (this.state.checkboxListSelection.length === 0 && errors === null) {
+      errors = {
+        ...errors,
+        ItemCheckboxList: "Please select atleast one pickup item.",
+      };
+    }
+
+    //Update errors state
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
+
+    this.doSubmit_AssignPickupForm();
+  };
+
   handleSubmit_PickupRequestForm = (e) => {
     //Prevent from default behaviour of form submission
     e.preventDefault();

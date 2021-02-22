@@ -144,6 +144,7 @@ class ManagePickups extends Form {
         latitude: "",
         longitude: "",
       },
+      checkboxListSelection: [],
     });
   };
 
