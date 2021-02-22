@@ -20,7 +20,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
               onClick={() => onItemSelect("AssignPickups")}
               id="AssignPickups"
             >
-              Assign Pickups
+              Assign Pickup's
             </button>
           </Fragment>
         )}
@@ -40,7 +40,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
               onClick={() => onItemSelect("ManagePickups")}
               id="ManagePickups"
             >
-              Manage Pickups
+              Manage Pickup's
             </button>
             <button
               type="button"
@@ -59,7 +59,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
             onClick={() => onItemSelect("DeliverPickups")}
             id="DeliverPickups"
           >
-            Deliver Pickups
+            Deliver Pickup'ss
           </button>
         )}
         <button
