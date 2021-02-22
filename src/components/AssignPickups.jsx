@@ -50,6 +50,10 @@ class AssignPickups extends Form {
     await this.getAllDrivers();
   }
 
+  handleDateFormat = (date) => {
+    return `${new Date(date).toLocaleDateString("de-DE")}`;
+  };
+
   getAllAssignRequests = async () => {
     let allDriversRequest = [];
 
@@ -96,7 +100,7 @@ class AssignPickups extends Form {
       allPickups.push({
         assignId: pickup.idAssign,
         requestId: pickup.idRequest,
-        pickupDate: this.handleDateFormat(pickupRequestData.pickupDate),
+        pickupDate: pickupRequestData.pickupDate,
         pickupTime: pickupRequestData.pickupTime,
         address: `${userDetails.address2}, ${userDetails.city}, ${userDetails.province}, ${userDetails.country}`,
       });
@@ -154,10 +158,6 @@ class AssignPickups extends Form {
     this.setState({ checkboxList: ddlRequest });
   }
 
-  handleDateFormat = (date) => {
-    return `${new Date(date).toLocaleDateString("de-DE")}`;
-  };
-
   resetControls = async () => {
     this.setState({
       data: {
@@ -197,7 +197,7 @@ class AssignPickups extends Form {
 
     if (assignData) {
       //Refresh the grid
-      //await getAllPickupsByUserId(currentUser.idUser);
+      await this.getAllAssignRequests();
 
       //Switch mode to grid
       this.handleModes("grid");
