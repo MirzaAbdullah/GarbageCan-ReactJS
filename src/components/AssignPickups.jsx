@@ -99,10 +99,11 @@ class AssignPickups extends Form {
       //Pushing data to allPickups Array
       allPickups.push({
         assignId: pickup.idAssign,
+        assignDate: pickup.createdDate,
         requestId: pickup.idRequest,
         pickupDate: pickupRequestData.pickupDate,
         pickupTime: pickupRequestData.pickupTime,
-        address: `${userDetails.address2}, ${userDetails.city}, ${userDetails.province}, ${userDetails.country}`,
+        address: `${userDetails.address1}, ${userDetails.address2}, ${userDetails.city}, ${userDetails.province}, ${userDetails.country}`,
       });
     });
 

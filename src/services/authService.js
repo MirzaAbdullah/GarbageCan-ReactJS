@@ -47,6 +47,10 @@ export async function isPasswordValid(userId, oldPassword){
   return await http.get(`${apiEndpoint}/IsPasswordValid/${userId}/${oldPassword}`);
 }
 
+export async function forgetPassword(email){
+  return await http.get(`${apiEndpoint}/ForgetPassword/${email}`);
+}
+
 export async function sendVerificationCode(userEmail){
   return await http.get(`${apiEndpoint}/SendVerificationCode/${userEmail}`);
 }
@@ -111,5 +115,6 @@ export default {
   sendVerificationCode,
   verifyUser,
   getUserById,
-  getUsersByRoleId
+  getUsersByRoleId,
+  forgetPassword
 };
