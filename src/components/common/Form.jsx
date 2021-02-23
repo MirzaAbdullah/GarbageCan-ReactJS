@@ -108,6 +108,18 @@ class Form extends Component {
     this.doSubmit_RegisterForm();
   };
 
+  handleSubmit_ForgetPasswordForm = (e) => {
+    //Prevent from default behaviour of form submission
+    e.preventDefault();
+
+    const errors = this.validate();
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
+
+    this.doSubmit_ForgetPasswordForm();
+  };
+
   handleSubmit_ChangePasswordForm = (e) => {
     //Prevent from default behaviour of form submission
     e.preventDefault();

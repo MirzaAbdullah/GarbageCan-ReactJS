@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import $ from "jquery";
-import { toast } from "react-toastify";
 
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -17,8 +15,6 @@ import {
   Paper,
 } from "@material-ui/core";
 
-import ModalConfirmation from "./ModalConfirmation";
-
 class ManageAssignGrid extends Component {
   useRowStyles = makeStyles({
     root: {
@@ -31,7 +27,6 @@ class ManageAssignGrid extends Component {
   state = {
     open: false,
     openId: "",
-    selectedKey: "",
     allAssignPickupData: this.props.allAssignPickupData,
   };
 
@@ -43,18 +38,8 @@ class ManageAssignGrid extends Component {
     return `${new Date(date).toLocaleDateString("de-DE")}`;
   };
 
-  updateSelectedKey = (key) => {
-    this.setState({
-      selectedKey: key,
-    });
-  };
-
-  handleDeletePickup = (assignId) => {
-    console.log("delete", assignId);
-  };
-
   render() {
-    const { open, openId, selectedKey, allAssignPickupData } = this.state;
+    const { open, openId, allAssignPickupData } = this.state;
 
     return (
       <React.Fragment>
@@ -128,7 +113,9 @@ class ManageAssignGrid extends Component {
                                 <TableCell className="font-weight-bold">
                                   Pickup Address
                                 </TableCell>
-                                <TableCell />
+                                <TableCell className="font-weight-bold">
+                                  Assign Date
+                                </TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -164,15 +151,9 @@ class ManageAssignGrid extends Component {
                                         {requestDetail.address}
                                       </TableCell>
                                       <TableCell>
-                                        <a
-                                          data-toggle="modal"
-                                          data-target="#garbageCanModal"
-                                          href="/#"
-                                          className="text-danger ml-1"
-                                          style={{ cursor: "pointer" }}
-                                        >
-                                          <i className="far fa-2x fa-trash-alt"></i>
-                                        </a>
+                                        {this.handleDateFormat(
+                                          requestDetail.assignDate
+                                        )}
                                       </TableCell>
                                     </TableRow>
                                   ))}
@@ -187,13 +168,6 @@ class ManageAssignGrid extends Component {
             </TableBody>
           </Table>
         </TableContainer>
-        <ModalConfirmation
-          modalHeader="Delete Pickup"
-          modalBody="Are you sure want to delete this pickup ?"
-          modalButtonText="Delete Pickup"
-          modalKey={selectedKey}
-          modalButtonOperation={this.handleDeletePickup}
-        ></ModalConfirmation>
       </React.Fragment>
     );
   }

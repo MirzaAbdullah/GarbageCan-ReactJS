@@ -2,7 +2,6 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./Form";
 import authService from "../../services/authService";
-import { Redirect } from "react-router-dom";
 
 class Register extends Form {
   state = {
@@ -92,9 +91,6 @@ class Register extends Form {
           ? this.props.location.from.pathname
           : "/dashboard";
       }
-
-      //Activate the button Spinner
-      this.isSpinnerActive(false);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -102,13 +98,14 @@ class Register extends Form {
         this.setState({ errors });
       }
     }
+
+    //Activate the button Spinner
+    this.isSpinnerActive(false);
   };
 
   render() {
-    const { currentUser, isSpinner } = this.state;
+    const { isSpinner } = this.state;
     const { handleModes } = this.props;
-
-    if (currentUser) return <Redirect to="/dashboard" />;
 
     return (
       <form onSubmit={this.handleSubmit_RegisterForm}>

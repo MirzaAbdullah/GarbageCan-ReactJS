@@ -1,10 +1,14 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/Form";
-import authService from "../services/authService";
 import { Redirect } from "react-router-dom";
-import { Fragment } from "react";
+
+//Component
 import Register from "./common/Register";
+import ForgetPassword from "./common/ForgetPassword";
+
+//Service
+import authService from "../services/authService";
 
 class AuthenticationForm extends Form {
   state = {
@@ -13,6 +17,7 @@ class AuthenticationForm extends Form {
     isSpinner: false,
     isRegisterView: false,
     isLoginView: false,
+    isForgetPasswordView: false,
     currentUser: authService.getCurrentUser(),
   };
 
@@ -23,7 +28,11 @@ class AuthenticationForm extends Form {
 
   componentDidMount() {
     //Set isLoginView = true & isRegisterView = false
-    this.setState({ isLoginView: true, isRegisterView: false });
+    this.setState({
+      isLoginView: true,
+      isRegisterView: false,
+      isForgetPasswordView: false,
+    });
   }
 
   isSpinnerActive = (isSpinner) => {
@@ -32,11 +41,26 @@ class AuthenticationForm extends Form {
 
   handleModes = (mode) => {
     if (mode === "login") {
-      //Set isGridView = true & isEditView = false
-      this.setState({ isLoginView: true, isRegisterView: false });
+      //Set isGridView = true & isEditView = false & isForgetPasswordView = false
+      this.setState({
+        isLoginView: true,
+        isRegisterView: false,
+        isForgetPasswordView: false,
+      });
     } else if (mode === "register") {
-      //Set isGridView = true & isEditView = false
-      this.setState({ isLoginView: false, isRegisterView: true });
+      //Set isGridView = true & isEditView = false & isForgetPasswordView = false
+      this.setState({
+        isLoginView: false,
+        isRegisterView: true,
+        isForgetPasswordView: false,
+      });
+    } else {
+      //Set isGridView = false & isEditView = false & isForgetPasswordView = true
+      this.setState({
+        isLoginView: false,
+        isRegisterView: false,
+        isForgetPasswordView: true,
+      });
     }
   };
 
@@ -49,9 +73,6 @@ class AuthenticationForm extends Form {
 
       await authService.login(data.email, data.password);
 
-      //Activate the button Spinner
-      this.isSpinnerActive(false);
-
       //redirects to homePage or already selected page
       const { state } = this.props.location;
       window.location = state ? state.from.pathname : "/dashboard";
@@ -63,15 +84,24 @@ class AuthenticationForm extends Form {
         this.setState({ errors });
       }
     }
+
+    //Activate the button Spinner
+    this.isSpinnerActive(false);
   };
 
   render() {
-    const { isSpinner, currentUser, isLoginView, isRegisterView } = this.state;
+    const {
+      isSpinner,
+      currentUser,
+      isLoginView,
+      isRegisterView,
+      isForgetPasswordView,
+    } = this.state;
 
     if (currentUser) return <Redirect to="/dashboard" />;
 
     return (
-      <Fragment>
+      <React.Fragment>
         <div className="text-center Loginform_MT">
           <img
             className="mb-2"
@@ -116,7 +146,12 @@ class AuthenticationForm extends Form {
                       )}
                     </div>
                     <div className="text-right">
-                      <a href="#/">Forget Password?</a>
+                      <a
+                        href="#/"
+                        onClick={() => this.handleModes("forgetPassword")}
+                      >
+                        Forget Password?
+                      </a>
                     </div>
                     {this.renderCustomButton(
                       "Sign In",
@@ -134,9 +169,16 @@ class AuthenticationForm extends Form {
                 </div>
               </div>
             )}
+            {isForgetPasswordView && (
+              <div className="col-12 col-md-12">
+                <div className="col-12 col-sm-12 col-md-4 offset-md-4">
+                  <ForgetPassword handleModes={this.handleModes} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      </Fragment>
+      </React.Fragment>
     );
   }
 }
