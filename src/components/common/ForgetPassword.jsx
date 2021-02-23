@@ -68,6 +68,9 @@ class ForgetPassword extends Form {
           //reset Controls
           this.resetControls();
 
+          //switch to login View
+          this.props.handleModes("login");
+
           toast.success("New password send to your registered email address");
         } else {
           toast.error("Sending new password failed! Please try again.");
