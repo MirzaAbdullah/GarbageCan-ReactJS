@@ -144,6 +144,18 @@ class Form extends Component {
     this.doSubmit_VerifyAccountForm();
   };
 
+  handleSubmit_AddressForm = (e) => {
+    //Prevent from default behaviour of form submission
+    e.preventDefault();
+
+    const errors = this.validate();
+    this.setState({ errors: errors || {} });
+
+    if (errors) return;
+
+    this.doSubmit_AddressForm();
+  };
+
   handleSubmit_AssignPickupForm = (e) => {
     //Prevent from default behaviour of form submission
     e.preventDefault();

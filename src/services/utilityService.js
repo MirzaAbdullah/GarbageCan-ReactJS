@@ -11,11 +11,11 @@ export async function GetAllItems(){
 }
 
 export async function GetUserDetailsById(userId){
-    return http.get(`${apiEndpoint}/GetUserDetailsById/${userId}`);
+    return await http.get(`${apiEndpoint}/GetUserDetailsById/${userId}`);
 }
 
 export async function CreateUserDetails(userId, address1, address2, city, province, country){
-    await http.post(`${apiEndpoint}/CreateUserDetails`, {
+    return await http.post(`${apiEndpoint}/CreateUserDetails`, {
         idUser: userId,
         address1: address1,
         address2: address2,
@@ -26,7 +26,7 @@ export async function CreateUserDetails(userId, address1, address2, city, provin
 }
 
 export async function UpdateUserDetails(userDetailsId, userId, address1, address2, city, province, country){
-    await http.put(`${apiEndpoint}/UpdateUserDetails`, {
+    return await http.put(`${apiEndpoint}/UpdateUserDetails`, {
         idUserDetail: userDetailsId,
         idUser: userId,
         address1: address1,

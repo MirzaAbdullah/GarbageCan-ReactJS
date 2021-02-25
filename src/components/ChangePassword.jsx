@@ -92,7 +92,9 @@ class ChangePassword extends Form {
         <div className="col-12 mt-2 p-0">
           <div className="row mt-2">
             <div className="col-12 col-sm-12 col-md-12 p-0">
-              <h4>Change Password</h4>
+              <h4>
+                <i class="fas fa-key"></i>&nbsp;Change Password
+              </h4>
             </div>
           </div>
           <div className="row mt-3">

@@ -1,23 +1,37 @@
 import React from "react";
+import $ from "jquery";
 import { Fragment } from "react";
 
 const SidebarMenu = ({ userRole, onItemSelect }) => {
+  function deactivateAllMenus() {
+    $(".list-group>.list-group-item").removeClass("active");
+  }
+
   return (
     <Fragment>
-      <div className="list-group">
+      <div className="list-group" id="list-tab" role="tablist">
         {userRole === "1" && (
           <Fragment>
             <button
               type="button"
               className="list-group-item list-group-item-action"
-              onClick={() => onItemSelect("UserManagement")}
+              onClick={() => {
+                onItemSelect("UserManagement");
+                deactivateAllMenus();
+                $("#UserManagement").addClass("active");
+              }}
+              id="UserManagement"
             >
               User Management
             </button>
             <button
               type="button"
               className="list-group-item list-group-item-action"
-              onClick={() => onItemSelect("AssignPickups")}
+              onClick={() => {
+                onItemSelect("AssignPickups");
+                deactivateAllMenus();
+                $("#AssignPickups").addClass("active");
+              }}
               id="AssignPickups"
             >
               Assign Pickup's
@@ -29,7 +43,11 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
             <button
               type="button"
               className="list-group-item list-group-item-action"
-              onClick={() => onItemSelect("ManageAddress")}
+              onClick={() => {
+                onItemSelect("ManageAddress");
+                deactivateAllMenus();
+                $("#ManageAddress").addClass("active");
+              }}
               id="ManageAddress"
             >
               Manage Address
@@ -37,7 +55,11 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
             <button
               type="button"
               className="list-group-item list-group-item-action"
-              onClick={() => onItemSelect("ManagePickups")}
+              onClick={() => {
+                onItemSelect("ManagePickups");
+                deactivateAllMenus();
+                $("#ManagePickups").addClass("active");
+              }}
               id="ManagePickups"
             >
               Manage Pickup's
@@ -45,7 +67,11 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
             <button
               type="button"
               className="list-group-item list-group-item-action"
-              onClick={() => onItemSelect("VerifyAccount")}
+              onClick={() => {
+                onItemSelect("VerifyAccount");
+                deactivateAllMenus();
+                $("#VerifyAccount").addClass("active");
+              }}
               id="VerifyAccount"
             >
               Verify Account
@@ -56,7 +82,11 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
           <button
             type="button"
             className="list-group-item list-group-item-action"
-            onClick={() => onItemSelect("DeliverPickups")}
+            onClick={() => {
+              onItemSelect("DeliverPickups");
+              deactivateAllMenus();
+              $("#DeliverPickups").addClass("active");
+            }}
             id="DeliverPickups"
           >
             Deliver Pickup'ss
@@ -65,7 +95,11 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
         <button
           type="button"
           className="list-group-item list-group-item-action"
-          onClick={() => onItemSelect("ChangePassword")}
+          onClick={() => {
+            onItemSelect("ChangePassword");
+            deactivateAllMenus();
+            $("#ChangePassword").addClass("active");
+          }}
           id="ChangePassword"
         >
           Change Password
