@@ -88,7 +88,7 @@ class ManageAddress extends Form {
   identifyAddressProcess = () => {
     const { isUserAddressExists } = this.state;
 
-    return isUserAddressExists ? "Update Address" : "Add Address";
+    return isUserAddressExists ? "Update Address" : "Create Address";
   };
 
   doSubmit_AddressForm = async () => {
@@ -214,7 +214,8 @@ class ManageAddress extends Form {
             <div className="row mt-2">
               <div className="col-12 col-sm-12 col-md-6 p-0">
                 <h4>
-                  <i className="fas fa-plus"></i> Create Address
+                  <i className="fas fa-plus"></i>{" "}
+                  {this.identifyAddressProcess()}
                 </h4>
               </div>
               <div className="col-12 col-sm-12 col-md-6 text-right p-0">
