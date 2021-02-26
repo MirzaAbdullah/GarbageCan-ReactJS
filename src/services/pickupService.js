@@ -18,6 +18,21 @@ export async function deletePickupRequest(pcikupId){
     return await http.delete(`${apiEndpoint}/DeletePickupRequest/${pcikupId}`);
 }
 
+export async function updatePickupStatus(idRequest, pickupStatus){
+    return await http.put(`${apiEndpoint}/UpdatePickupStatus`,{
+        idRequest: idRequest,
+        pickupStatus: pickupStatus
+    });
+}
+
+export async function updateRequestDetailsByDriver(idRequest, pickupCost, requestDetails){
+    return await http.put(`${apiEndpoint}/UpdatePickupStatus`,{
+        idRequest: idRequest,
+        pickup_Cost: pickupCost,
+        requestDetails: requestDetails
+    });
+}
+
 export async function createPickupRequest(userId, pickupDate, pickupTime, latitude, longitude, requestDetails ){
     return await http.post(`${apiEndpoint}/CreatePickupRequest`, {
         idUser: userId,
@@ -36,5 +51,6 @@ export default{
     deletePickupRequest,
     createPickupRequest,
     getPickupRequestByStatus,
-    getPickupRequestById
+    getPickupRequestById,
+    updateRequestDetailsByDriver
 }
