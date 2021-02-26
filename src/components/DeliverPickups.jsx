@@ -23,10 +23,7 @@ class DeliverPickups extends Component {
   };
 
   async componentDidMount() {
-    //OutForPickup: 1aaf394aa15d45e28f4c1b150966065a
-    //AssignedToDriver: 1cae09823b3d41bb8dd2f5a9eb70a3af
-
-    await this.handleRequestDetails("1aaf394aa15d45e28f4c1b150966065a");
+    //await this.handleRequestDetails("4bea10a024ca4ec78f122841bd53762d");
   }
 
   handleAcceptPickup = async (idRequest) => {
@@ -49,12 +46,10 @@ class DeliverPickups extends Component {
   };
 
   handleUpdatePickupCosts = async (idRequest, pickupCost, requestDetails) => {
-    //console.log(idRequest, pickupCost, requestDetails);
-
     //Update the record
     const { data: isRecordUpdated } = await updateRequestDetailsByDriver(
       idRequest,
-      pickupCost,
+      parseFloat(pickupCost),
       requestDetails
     );
 
@@ -82,6 +77,11 @@ class DeliverPickups extends Component {
       this.setState({
         isRequestAssignedToDriver: false,
         isRequestOutForPickup: true,
+      });
+    } else {
+      this.setState({
+        isRequestAssignedToDriver: false,
+        isRequestOutForPickup: false,
       });
     }
 

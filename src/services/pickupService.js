@@ -26,7 +26,7 @@ export async function updatePickupStatus(idRequest, pickupStatus){
 }
 
 export async function updateRequestDetailsByDriver(idRequest, pickupCost, requestDetails){
-    return await http.put(`${apiEndpoint}/UpdatePickupStatus`,{
+    return await http.put(`${apiEndpoint}/UpdateRequestDetailsByDriver`,{
         idRequest: idRequest,
         pickup_Cost: pickupCost,
         requestDetails: requestDetails
