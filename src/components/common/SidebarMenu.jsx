@@ -89,7 +89,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
             }}
             id="DeliverPickups"
           >
-            Deliver Pickup'ss
+            Pickup Packages
           </button>
         )}
         <button
