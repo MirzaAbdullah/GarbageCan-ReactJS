@@ -57,8 +57,10 @@ class BannerDetailedPickup extends Form {
         idRequest: element.idRequest,
         idItem: element.idItem,
         itemName: element.itemName,
-        itemWeight: $(`#${element.idRequestDetail}_${element.idItem}`).val(),
-        itemCost: element.itemCost,
+        itemWeight: parseFloat(
+          $(`#${element.idRequestDetail}_${element.idItem}`).val()
+        ),
+        itemCost: parseFloat(element.itemCost),
       });
     });
 
