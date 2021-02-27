@@ -230,12 +230,12 @@ class AssignPickups extends Form {
         {isGridView && (
           <React.Fragment>
             <div className="row mt-2">
-              <div className="col-12 col-sm-12 col-md-6 p-0">
+              <div className="col-12 col-sm-12 col-md-6">
                 <h4>
                   <i className="fas fa-dolly"></i> Assign Pickup's Management
                 </h4>
               </div>
-              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
+              <div className="col-12 col-sm-12 col-md-6 text-right">
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -246,7 +246,7 @@ class AssignPickups extends Form {
               </div>
             </div>
             <div className="row mt-3 mb-3">
-              <div className="col-12 p-0">
+              <div className="col-12">
                 {allAssignedRequests.length === 0 && (
                   <React.Fragment>
                     <div className="text-center mt-5">
@@ -266,12 +266,12 @@ class AssignPickups extends Form {
         {isEditView && (
           <React.Fragment>
             <div className="row mt-2">
-              <div className="col-12 col-sm-12 col-md-6 p-0">
+              <div className="col-12 col-sm-12 col-md-6">
                 <h4>
                   <i className="fas fa-plus"></i> Assign Pickup
                 </h4>
               </div>
-              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
+              <div className="col-12 col-sm-12 col-md-6 text-right">
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -283,7 +283,7 @@ class AssignPickups extends Form {
               </div>
             </div>
             <div className="row mt-3 mb-3">
-              <div className="col-12 p-0">
+              <div className="col-12">
                 <form onSubmit={this.handleSubmit_AssignPickupForm}>
                   {this.renderSelect(
                     "ddlAllDrivers",

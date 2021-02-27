@@ -218,12 +218,12 @@ class ManagePickups extends Form {
         {isGridView && (
           <React.Fragment>
             <div className="row mt-2">
-              <div className="col-12 col-sm-12 col-md-6 p-0">
+              <div className="col-12 col-sm-12 col-md-6">
                 <h4>
                   <i className="fas fa-truck-pickup"></i> Pickups Management
                 </h4>
               </div>
-              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
+              <div className="col-12 col-sm-12 col-md-6 text-right">
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -239,7 +239,7 @@ class ManagePickups extends Form {
               </div>
             </div>
             <div className="row mt-3 mb-3">
-              <div className="col-12 p-0">
+              <div className="col-12">
                 {allPickups.length === 0 && (
                   <React.Fragment>
                     <div className="text-center mt-5">
@@ -259,12 +259,12 @@ class ManagePickups extends Form {
         {isEditView && (
           <React.Fragment>
             <div className="row mt-2">
-              <div className="col-12 col-sm-12 col-md-6 p-0">
+              <div className="col-12 col-sm-12 col-md-6">
                 <h4>
                   <i className="fas fa-plus"></i> Create Pickup
                 </h4>
               </div>
-              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
+              <div className="col-12 col-sm-12 col-md-6 text-right">
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -275,7 +275,7 @@ class ManagePickups extends Form {
                 </button>
               </div>
               <form
-                className="col-12 mt-2 mb-2 p-0"
+                className="col-12 mt-2 mb-2"
                 onSubmit={this.handleSubmit_PickupRequestForm}
               >
                 <div className="row">

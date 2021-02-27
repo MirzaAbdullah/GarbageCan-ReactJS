@@ -158,12 +158,12 @@ class ManageAddress extends Form {
         {isGridView && (
           <React.Fragment>
             <div className="row mt-2">
-              <div className="col-12 col-sm-12 col-md-6 p-0">
+              <div className="col-12 col-sm-12 col-md-6">
                 <h4>
                   <i className="fas fa-map-marked-alt"></i> Address Management
                 </h4>
               </div>
-              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
+              <div className="col-12 col-sm-12 col-md-6 text-right">
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -175,7 +175,7 @@ class ManageAddress extends Form {
               </div>
             </div>
             <div className="row mt-3 mb-3">
-              <div className="col-12 p-0">
+              <div className="col-12">
                 {!isUserAddressExists && (
                   <React.Fragment>
                     <div className="text-center mt-5">
@@ -212,13 +212,13 @@ class ManageAddress extends Form {
         {isEditView && (
           <React.Fragment>
             <div className="row mt-2">
-              <div className="col-12 col-sm-12 col-md-6 p-0">
+              <div className="col-12 col-sm-12 col-md-6">
                 <h4>
                   <i className="fas fa-plus"></i>{" "}
                   {this.identifyAddressProcess()}
                 </h4>
               </div>
-              <div className="col-12 col-sm-12 col-md-6 text-right p-0">
+              <div className="col-12 col-sm-12 col-md-6 text-right">
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -230,7 +230,7 @@ class ManageAddress extends Form {
               </div>
             </div>
             <div className="row mt-3 mb-3">
-              <div className="col-12 p-0">
+              <div className="col-12">
                 <form onSubmit={this.handleSubmit_AddressForm}>
                   {this.renderInput(
                     "address1",

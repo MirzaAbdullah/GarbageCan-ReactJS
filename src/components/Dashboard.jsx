@@ -26,7 +26,7 @@ class Dashboard extends Component {
     return (
       <Fragment>
         <div className="row">
-          <div className="col-12 col-sm-12 col-md-3">
+          <div className="col-12 col-sm-12 col-md-3 mb-3">
             <div className="text-center">
               <img
                 className="mb-1"

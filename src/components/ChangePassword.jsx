@@ -91,14 +91,14 @@ class ChangePassword extends Form {
       <React.Fragment>
         <div className="col-12 mt-2 p-0">
           <div className="row mt-2">
-            <div className="col-12 col-sm-12 col-md-12 p-0">
+            <div className="col-12 col-sm-12 col-md-12">
               <h4>
                 <i className="fas fa-key"></i>&nbsp;Change Password
               </h4>
             </div>
           </div>
           <div className="row mt-3">
-            <div className="col-12 p-0">
+            <div className="col-12">
               <form onSubmit={this.handleSubmit_ChangePasswordForm}>
                 {this.renderInput(
                   "oldPassword",
