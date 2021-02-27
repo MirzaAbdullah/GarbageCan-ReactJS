@@ -154,7 +154,7 @@ class ManagePickupGrid extends Component {
                     </TableCell>
                     <TableCell>{pickup.pickupTime}</TableCell>
                     <TableCell align="right">
-                      {this.handleSubTotal(pickup.requestDetails, "itemCost") +
+                      {this.handleSubTotal(pickup.requestDetails, "itemCost") -
                         pickup.pickup_Cost}
                     </TableCell>
                     <TableCell>
@@ -290,7 +290,7 @@ class ManagePickupGrid extends Component {
                                   {this.handleSubTotal(
                                     pickup.requestDetails,
                                     "itemCost"
-                                  ) + pickup.pickup_Cost}
+                                  ) - pickup.pickup_Cost}
                                 </TableCell>
                               </TableRow>
                             </TableBody>
