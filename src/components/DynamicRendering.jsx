@@ -17,6 +17,7 @@ class DynamicRendering extends Component {
     ChangePassword: ChangePassword,
     VerifyAccount: VerifyAccount,
   };
+
   render() {
     const { tag } = this.props;
     const TagName = this.components[tag];

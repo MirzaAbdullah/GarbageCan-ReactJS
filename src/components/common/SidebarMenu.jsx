@@ -3,8 +3,9 @@ import $ from "jquery";
 import { Fragment } from "react";
 
 const SidebarMenu = ({ userRole, onItemSelect }) => {
-  function deactivateAllMenus() {
+  function deactivateAllMenus(menuItem) {
     $(".list-group>.list-group-item").removeClass("active");
+    $(`#${menuItem}`).addClass("active");
   }
 
   return (
@@ -17,8 +18,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
               className="list-group-item list-group-item-action"
               onClick={() => {
                 onItemSelect("UserManagement");
-                deactivateAllMenus();
-                $("#UserManagement").addClass("active");
+                deactivateAllMenus("UserManagement");
               }}
               id="UserManagement"
             >
@@ -29,8 +29,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
               className="list-group-item list-group-item-action"
               onClick={() => {
                 onItemSelect("AssignPickups");
-                deactivateAllMenus();
-                $("#AssignPickups").addClass("active");
+                deactivateAllMenus("AssignPickups");
               }}
               id="AssignPickups"
             >
@@ -45,8 +44,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
               className="list-group-item list-group-item-action"
               onClick={() => {
                 onItemSelect("ManageAddress");
-                deactivateAllMenus();
-                $("#ManageAddress").addClass("active");
+                deactivateAllMenus("ManageAddress");
               }}
               id="ManageAddress"
             >
@@ -57,8 +55,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
               className="list-group-item list-group-item-action"
               onClick={() => {
                 onItemSelect("ManagePickups");
-                deactivateAllMenus();
-                $("#ManagePickups").addClass("active");
+                deactivateAllMenus("ManagePickups");
               }}
               id="ManagePickups"
             >
@@ -69,8 +66,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
               className="list-group-item list-group-item-action"
               onClick={() => {
                 onItemSelect("VerifyAccount");
-                deactivateAllMenus();
-                $("#VerifyAccount").addClass("active");
+                deactivateAllMenus("VerifyAccount");
               }}
               id="VerifyAccount"
             >
@@ -84,8 +80,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
             className="list-group-item list-group-item-action"
             onClick={() => {
               onItemSelect("DeliverPickups");
-              deactivateAllMenus();
-              $("#DeliverPickups").addClass("active");
+              deactivateAllMenus("DeliverPickups");
             }}
             id="DeliverPickups"
           >
@@ -97,8 +92,7 @@ const SidebarMenu = ({ userRole, onItemSelect }) => {
           className="list-group-item list-group-item-action"
           onClick={() => {
             onItemSelect("ChangePassword");
-            deactivateAllMenus();
-            $("#ChangePassword").addClass("active");
+            deactivateAllMenus("ChangePassword");
           }}
           id="ChangePassword"
         >

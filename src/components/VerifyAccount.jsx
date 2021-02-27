@@ -126,12 +126,12 @@ class VerifyAccount extends Form {
     return (
       <React.Fragment>
         <div className="row mt-2">
-          <div className="col-12 col-sm-12 col-md-6 p-0">
+          <div className="col-12 col-sm-12 col-md-6">
             <h4>
               <i className="fas fa-certificate"></i> Verify Account
             </h4>
           </div>
-          <div className="col-12 col-sm-12 col-md-6 text-right p-0">
+          <div className="col-12 col-sm-12 col-md-6 text-right">
             <button
               type="button"
               className="btn btn-primary"
@@ -157,7 +157,7 @@ class VerifyAccount extends Form {
           </div>
         </div>
         <div className="row mt-2 mb-2">
-          <div className="col-12 col-sm-12 col-md-12  p-0">
+          <div className="col-12 col-sm-12 col-md-12">
             <form onSubmit={this.handleSubmit_VerifyAccountForm}>
               {this.renderInputDisable(
                 "verificationCode",
