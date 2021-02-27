@@ -17,3 +17,6 @@ npm start
 As I have set Environments for the application (change connection string in .env.development according to your localhost url from garbagecan-api project), for local use
 
 npm run build serve -s build
+
+
+LIVE URL: https://garbagecanfe.herokuapp.com/authentication
