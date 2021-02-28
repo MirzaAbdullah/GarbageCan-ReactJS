@@ -83,3 +83,12 @@
 .table-bordered > tfoot > tr > td {
   border: 0.5px solid #9fcdff;
 }
+
+.width-100 {
+  width: 100%;
+}
+
+/* Google Map */
+div.gm-style-iw {
+  max-width: 365px !important;
+}
