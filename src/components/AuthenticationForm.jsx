@@ -103,13 +103,19 @@ class AuthenticationForm extends Form {
     return (
       <React.Fragment>
         <div className="text-center Loginform_MT">
-          <img
-            className="mb-2"
-            src="/GarbageCan_Logo.png"
-            alt="GarbageCan Offical Logo"
-            width="250"
-            height="90"
-          />
+          <a
+            href="https://www.garbagecan.pk/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <img
+              className="mb-2"
+              src="/GarbageCan_Logo.png"
+              alt="GarbageCan Offical Logo"
+              width="250"
+              height="90"
+            />
+          </a>
         </div>
         <div className="container mt-4">
           <div className="row">
